@@ -1,0 +1,10 @@
+# Ignorar configurações do VS Code e outras IDEs
+.vscode/
+.idea/
+
+# Ignorar arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar arquivos de ambiente (se houver)
+.env
