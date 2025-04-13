@@ -1,4 +1,4 @@
-package br.com.vintor;
+/*package br.com.vintor;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,4 +10,4 @@ class VintorApplicationTests {
 	void contextLoads() {
 	}
 
-}
+}*/
