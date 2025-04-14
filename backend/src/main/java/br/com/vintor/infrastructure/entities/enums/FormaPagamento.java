@@ -1,12 +1,11 @@
 package br.com.vintor.infrastructure.entities.enums;
 
 public enum FormaPagamento {
-
-    DINHEIRO,
-    CARTAO_DEBITO,
-    CARTAO_CREDITO,
-    PIX,
     BOLETO,
+    CARTAO_CREDITO,
+    CARTAO_DEBITO,
     CHEQUE,
-    CREDIARIO
+    CREDIARIO,
+    DINHEIRO,
+    PIX
 }

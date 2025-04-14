@@ -21,6 +21,8 @@ public class Venda implements Serializable {
     private Instant dataHoraVenda;
     private BigDecimal descontoTotal;
     private BigDecimal valorTotal;
+
+    @Enumerated(EnumType.STRING)
     private FormaPagamento formaPagamento;
 
     @ManyToOne

@@ -15,7 +15,7 @@ public class Funcao{
     private Long id;
     private String funcao;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "funcoes")
     private Set<Usuario> usuarios = new HashSet<>();
 
     public Funcao() {

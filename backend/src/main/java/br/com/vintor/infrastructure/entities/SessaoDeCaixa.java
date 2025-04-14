@@ -16,14 +16,21 @@ public class SessaoDeCaixa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Usuario operador;
-    private Instant abertura;
-    private Instant fechamento;
+    private Instant dataHoraAbertura;
+    private Instant dataHoraFechamento;
     private BigDecimal valorInicial;
     private BigDecimal valorFinal;
     private BigDecimal valorEsperado;
+
+    @Column(columnDefinition = "TEXT")
     private String observacoes;
+
+    @Column(nullable = false)
     private Boolean encerrada;
+
+    @ManyToOne
+    @JoinColumn(name = "operador_id")
+    private Usuario operador;
 
     @OneToMany(mappedBy = "sessaoDeCaixa")
     private Set<Venda> vendas = new HashSet<>();
@@ -31,11 +38,11 @@ public class SessaoDeCaixa implements Serializable {
     public SessaoDeCaixa() {
     }
 
-    public SessaoDeCaixa(Long id, Usuario operador, Instant abertura, Instant fechamento, BigDecimal valorInicial, BigDecimal valorFinal, BigDecimal valorEsperado, String observacoes, Boolean encerrada) {
+    public SessaoDeCaixa(Long id, Usuario operador, Instant dataHoraAbertura, Instant dataHoraFechamento, BigDecimal valorInicial, BigDecimal valorFinal, BigDecimal valorEsperado, String observacoes, Boolean encerrada) {
         this.id = id;
         this.operador = operador;
-        this.abertura = abertura;
-        this.fechamento = fechamento;
+        this.dataHoraAbertura = dataHoraAbertura;
+        this.dataHoraFechamento = dataHoraFechamento;
         this.valorInicial = valorInicial;
         this.valorFinal = valorFinal;
         this.valorEsperado = valorEsperado;
@@ -59,20 +66,20 @@ public class SessaoDeCaixa implements Serializable {
         this.operador = operador;
     }
 
-    public Instant getAbertura() {
-        return abertura;
+    public Instant getDataHoraAbertura() {
+        return dataHoraAbertura;
     }
 
-    public void setAbertura(Instant abertura) {
-        this.abertura = abertura;
+    public void setDataHoraAbertura(Instant dataHoraAbertura) {
+        this.dataHoraAbertura = dataHoraAbertura;
     }
 
-    public Instant getFechamento() {
-        return fechamento;
+    public Instant getDataHoraFechamento() {
+        return dataHoraFechamento;
     }
 
-    public void setFechamento(Instant fechamento) {
-        this.fechamento = fechamento;
+    public void setDataHoraFechamento(Instant dataHoraFechamento) {
+        this.dataHoraFechamento = dataHoraFechamento;
     }
 
     public BigDecimal getValorInicial() {

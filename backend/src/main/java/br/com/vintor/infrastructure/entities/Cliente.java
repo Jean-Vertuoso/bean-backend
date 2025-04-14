@@ -1,9 +1,10 @@
 package br.com.vintor.infrastructure.entities;
 
+import br.com.vintor.infrastructure.entities.enums.TipoDocumento;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -16,13 +17,18 @@ public class Cliente implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private Date dataNascimento;
-    private String cpfOuCnpj;
+    private LocalDate dataNascimento;
+
+    @Enumerated(EnumType.STRING)
+    private TipoDocumento tipoDocumento;
+    private String numeroDocumento;
     private String email;
 
     @ElementCollection
+    @CollectionTable(name = "tb_cliente_telefones", joinColumns = @JoinColumn(name = "client_id"))
     private Set<Telefone> telefones;
     @ElementCollection
+    @CollectionTable(name = "tb_cliente_enderecos", joinColumns = @JoinColumn(name = "client_id"))
     private Set<Endereco> enderecos;
 
     @OneToMany(mappedBy = "cliente")
@@ -31,11 +37,12 @@ public class Cliente implements Serializable {
     public Cliente() {
     }
 
-    public Cliente(Long id, String nome, Date dataNascimento, String cpfOuCnpj, String email) {
+    public Cliente(Long id, String nome, LocalDate dataNascimento, TipoDocumento tipoDocumento, String numeroDocumento, String email) {
         this.id = id;
         this.nome = nome;
         this.dataNascimento = dataNascimento;
-        this.cpfOuCnpj = cpfOuCnpj;
+        this.tipoDocumento = tipoDocumento;
+        this.numeroDocumento = numeroDocumento;
         this.email = email;
     }
 
@@ -55,20 +62,28 @@ public class Cliente implements Serializable {
         this.nome = nome;
     }
 
-    public Date getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
-    public String getCpfOuCnpj() {
-        return cpfOuCnpj;
+    public TipoDocumento getTipoDocumento(){
+        return tipoDocumento;
     }
 
-    public void setCpfOuCnpj(String cpfOuCnpj) {
-        this.cpfOuCnpj = cpfOuCnpj;
+    public void setTipoDocumento(TipoDocumento tipoDocumento){
+        this.tipoDocumento = tipoDocumento;
+    }
+
+    public String getNumeroDocumento() {
+        return numeroDocumento;
+    }
+
+    public void setNumeroDocumento(String numeroDocumento) {
+        this.numeroDocumento = numeroDocumento;
     }
 
     public String getEmail() {
