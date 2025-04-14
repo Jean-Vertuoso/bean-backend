@@ -1,8 +1,11 @@
 package br.com.vintor.infrastructure.entities;
 
+import jakarta.persistence.Embeddable;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Embeddable
 public class Telefone implements Serializable {
 
     private String ddd;
