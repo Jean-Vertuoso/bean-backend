@@ -1,6 +1,6 @@
 package br.com.vintor.infrastructure.entities;
 
-import br.com.vintor.infrastructure.entities.enums.TipoMedida;
+import br.com.vintor.infrastructure.entities.enums.TipoEmbalagem;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -16,14 +16,15 @@ public class Produto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nome;
 
     @Column(columnDefinition = "TEXT")
-    private String descricao;
+    private String nome;
+    private String marca;
     private BigDecimal preco;
     private String imgUrl;
 
-    private TipoMedida tipoMedida;
+    @Enumerated(EnumType.STRING)
+    private TipoEmbalagem tipoEmbalagem;
 
     @OneToOne(mappedBy = "produto", cascade = CascadeType.ALL)
     private Estoque estoque;
@@ -40,13 +41,13 @@ public class Produto implements Serializable {
     public Produto() {
     }
 
-    public Produto(Long id, String nome, String descricao, BigDecimal preco, String imgUrl, TipoMedida tipoMedida) {
+    public Produto(Long id, String nome, String marca, BigDecimal preco, String imgUrl, TipoEmbalagem tipoEmbalagem) {
         this.id = id;
         this.nome = nome;
-        this.descricao = descricao;
+        this.marca = marca;
         this.preco = preco;
         this.imgUrl = imgUrl;
-        this.tipoMedida = tipoMedida;
+        this.tipoEmbalagem = tipoEmbalagem;
     }
 
     public Long getId() {
@@ -65,12 +66,12 @@ public class Produto implements Serializable {
         this.nome = nome;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getMarca() {
+        return marca;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setMarca(String marca) {
+        this.marca = marca;
     }
 
     public BigDecimal getPreco() {
@@ -89,12 +90,12 @@ public class Produto implements Serializable {
         this.imgUrl = imgUrl;
     }
 
-    public TipoMedida getTipoMedida() {
-        return tipoMedida;
+    public TipoEmbalagem getTipoEmbalagem() {
+        return tipoEmbalagem;
     }
 
-    public void setTipoMedida(TipoMedida tipoMedida) {
-        this.tipoMedida = tipoMedida;
+    public void setTipoEmbalagem(TipoEmbalagem tipoEmbalagem) {
+        this.tipoEmbalagem = tipoEmbalagem;
     }
 
     public Set<Categoria> getCategorias() {
