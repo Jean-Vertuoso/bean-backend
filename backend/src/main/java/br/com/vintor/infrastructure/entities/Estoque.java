@@ -20,6 +20,7 @@ public class Estoque implements Serializable {
     private LocalDateTime ultimaAtualizacao;
 
     @OneToOne
+    @JoinColumn(name = "produto_id")
     private Produto produto;
 
     public Estoque() {
