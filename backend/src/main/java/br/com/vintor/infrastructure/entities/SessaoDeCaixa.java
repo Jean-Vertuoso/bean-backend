@@ -1,12 +1,20 @@
 package br.com.vintor.infrastructure.entities;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+@Entity
+@Table(name = "tb_sessao_de_caixa")
 public class SessaoDeCaixa implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Usuario operador;
     private Instant abertura;
@@ -16,6 +24,9 @@ public class SessaoDeCaixa implements Serializable {
     private BigDecimal valorEsperado;
     private String observacoes;
     private Boolean encerrada;
+
+    @OneToMany(mappedBy = "sessaoDeCaixa")
+    private Set<Venda> vendas = new HashSet<>();
 
     public SessaoDeCaixa() {
     }
@@ -102,6 +113,10 @@ public class SessaoDeCaixa implements Serializable {
 
     public void setEncerrada(Boolean encerrada) {
         this.encerrada = encerrada;
+    }
+
+    public Set<Venda> getVendas(){
+        return vendas;
     }
 
     @Override

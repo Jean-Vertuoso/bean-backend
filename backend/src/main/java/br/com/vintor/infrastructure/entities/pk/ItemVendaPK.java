@@ -2,12 +2,21 @@ package br.com.vintor.infrastructure.entities.pk;
 
 import br.com.vintor.infrastructure.entities.Produto;
 import br.com.vintor.infrastructure.entities.Venda;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 import java.util.Objects;
 
+@Embeddable
 public class ItemVendaPK {
 
+    @ManyToOne
+    @JoinColumn(name = "venda_id")
     private Venda venda;
+
+    @ManyToOne
+    @JoinColumn(name = "produto_id")
     private Produto produto;
 
     public ItemVendaPK() {

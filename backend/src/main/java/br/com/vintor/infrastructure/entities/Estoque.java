@@ -1,18 +1,25 @@
 package br.com.vintor.infrastructure.entities;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Entity
+@Table(name = "tb_estoque")
 public class Estoque implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Double quantidade;
     private Double quantidadeMinima;
     private BigDecimal valorTotal;
     private LocalDateTime ultimaAtualizacao;
 
+    @OneToOne
     private Produto produto;
 
     public Estoque() {
