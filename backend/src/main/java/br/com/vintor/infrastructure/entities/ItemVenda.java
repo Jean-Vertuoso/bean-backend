@@ -1,12 +1,18 @@
 package br.com.vintor.infrastructure.entities;
 
 import br.com.vintor.infrastructure.entities.pk.ItemVendaPK;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
+@Entity
+@Table(name = "tb_item_venda")
 public class ItemVenda {
 
+    @EmbeddedId
     private ItemVendaPK id = new ItemVendaPK();
 
     private Double quantidade;
@@ -62,6 +68,10 @@ public class ItemVenda {
 
     public void setQuantidade(Double quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public BigDecimal getSubTotal(){
+        return precoUnitario.multiply(BigDecimal.valueOf(quantidade));
     }
 
     @Override

@@ -1,14 +1,21 @@
 package br.com.vintor.infrastructure.entities;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 
+@Entity
+@Table(name = "tb_categoria")
 public class Categoria implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
 
+    @ManyToMany(mappedBy = "categorias")
     private Set<Produto> produtos;
 
     public Categoria() {

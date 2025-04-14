@@ -1,16 +1,30 @@
 package br.com.vintor.infrastructure.entities;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@Entity
+@Table(name = "tb_usuario")
 public class Usuario implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private String email;
     private String senha;
 
+    @OneToMany(mappedBy = "operador")
+    private Set<Venda> vendas = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "tb_usuario_funcao",
+                joinColumns = @JoinColumn(name = "usuario_id"),
+                inverseJoinColumns = @JoinColumn(name = "funcao_id"))
     private Set<Funcao> funcoes;
 
     public Usuario() {
@@ -53,6 +67,10 @@ public class Usuario implements Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public Set<Venda> getVendas(){
+        return vendas;
     }
 
     public Set<Funcao> getFuncoes() {

@@ -1,26 +1,42 @@
 package br.com.vintor.infrastructure.entities;
 
 import br.com.vintor.infrastructure.entities.enums.FormaPagamento;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
+@Entity
+@Table(name = "tb_venda")
 public class Venda implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Instant dataHoraVenda;
     private BigDecimal descontoTotal;
     private BigDecimal valorTotal;
-
-    private Cliente cliente;
-    private Usuario operador;
-    private SessaoDeCaixa sessaoDeCaixa;
     private FormaPagamento formaPagamento;
 
-    private List<ItemVenda> itens;
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "sessao_de_caixa_id")
+    private SessaoDeCaixa sessaoDeCaixa;
+
+    @ManyToOne
+    @JoinColumn(name = "operador_id")
+    private Usuario operador;
+
+    @OneToMany(mappedBy = "id.venda")
+    private Set<ItemVenda> itens = new HashSet<>();
 
     public Venda() {
     }
@@ -100,7 +116,7 @@ public class Venda implements Serializable {
         this.formaPagamento = formaPagamento;
     }
 
-    public List<ItemVenda> getItens() {
+    public Set<ItemVenda> getItens() {
         return itens;
     }
 

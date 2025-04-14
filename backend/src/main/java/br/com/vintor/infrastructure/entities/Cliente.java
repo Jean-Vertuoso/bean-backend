@@ -1,27 +1,39 @@
 package br.com.vintor.infrastructure.entities;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@Entity
+@Table(name = "tb_cliente")
 public class Cliente implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String nome;
     private Date dataNascimento;
     private String cpfOuCnpj;
     private String email;
 
+    @ElementCollection
     private Set<Telefone> telefones;
+    @ElementCollection
     private Set<Endereco> enderecos;
+
+    @OneToMany(mappedBy = "cliente")
+    public Set<Venda> vendas = new HashSet<>();
 
     public Cliente() {
     }
 
-    public Cliente(Long id, String name, Date dataNascimento, String cpfOuCnpj, String email) {
+    public Cliente(Long id, String nome, Date dataNascimento, String cpfOuCnpj, String email) {
         this.id = id;
-        this.name = name;
+        this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.cpfOuCnpj = cpfOuCnpj;
         this.email = email;
@@ -35,12 +47,12 @@ public class Cliente implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public Date getDataNascimento() {
@@ -73,6 +85,10 @@ public class Cliente implements Serializable {
 
     public Set<Endereco> getEnderecos() {
         return enderecos;
+    }
+
+    public Set<Venda> getVendas(){
+        return vendas;
     }
 
     @Override
