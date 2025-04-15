@@ -26,13 +26,14 @@ public class Cliente implements Serializable {
 
     @ElementCollection
     @CollectionTable(name = "tb_cliente_telefones", joinColumns = @JoinColumn(name = "client_id"))
-    private Set<Telefone> telefones;
+    private Set<Telefone> telefones = new HashSet<>();
+
     @ElementCollection
     @CollectionTable(name = "tb_cliente_enderecos", joinColumns = @JoinColumn(name = "client_id"))
-    private Set<Endereco> enderecos;
+    private Set<Endereco> enderecos = new HashSet<>();;
 
     @OneToMany(mappedBy = "cliente")
-    public Set<Venda> vendas = new HashSet<>();
+    private Set<Venda> vendas = new HashSet<>();
 
     public Cliente() {
     }
