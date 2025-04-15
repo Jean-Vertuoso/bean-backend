@@ -33,7 +33,7 @@ public class Produto implements Serializable {
     @JoinTable(name = "tb_produto_categoria",
                 joinColumns = @JoinColumn(name = "produto_id"),
                 inverseJoinColumns = @JoinColumn(name = "categoria_id"))
-    private Set<Categoria> categorias;
+    private Set<Categoria> categorias = new HashSet<>();
 
     @OneToMany(mappedBy = "id.produto")
     private Set<ItemVenda> itens = new HashSet<>();
@@ -41,13 +41,14 @@ public class Produto implements Serializable {
     public Produto() {
     }
 
-    public Produto(Long id, String nome, String marca, BigDecimal preco, String imgUrl, TipoEmbalagem tipoEmbalagem) {
+    public Produto(Long id, String nome, String marca, BigDecimal preco, String imgUrl, TipoEmbalagem tipoEmbalagem, Estoque estoque) {
         this.id = id;
         this.nome = nome;
         this.marca = marca;
         this.preco = preco;
         this.imgUrl = imgUrl;
         this.tipoEmbalagem = tipoEmbalagem;
+        this.estoque = estoque;
     }
 
     public Long getId() {
@@ -96,6 +97,14 @@ public class Produto implements Serializable {
 
     public void setTipoEmbalagem(TipoEmbalagem tipoEmbalagem) {
         this.tipoEmbalagem = tipoEmbalagem;
+    }
+
+    public Estoque getEstoque() {
+        return estoque;
+    }
+
+    public void setEstoque(Estoque estoque) {
+        this.estoque = estoque;
     }
 
     public Set<Categoria> getCategorias() {

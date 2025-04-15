@@ -25,7 +25,7 @@ public class Usuario implements Serializable {
     @JoinTable(name = "tb_usuario_funcao",
                 joinColumns = @JoinColumn(name = "usuario_id"),
                 inverseJoinColumns = @JoinColumn(name = "funcao_id"))
-    private Set<Funcao> funcoes;
+    private Set<Funcao> funcoes = new HashSet<>();
 
     public Usuario() {
     }
