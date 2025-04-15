@@ -3,6 +3,7 @@ package br.com.vintor.infrastructure.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ public class Categoria implements Serializable {
     private String nome;
 
     @ManyToMany(mappedBy = "categorias")
-    private Set<Produto> produtos;
+    private Set<Produto> produtos = new HashSet<>();
 
     public Categoria() {
     }
