@@ -7,6 +7,7 @@ import java.util.Set;
 
 public class FuncaoDTO {
 
+    private Long id;
     private String funcao;
 
     private Set<UsuarioDTORequest> usuarios = new HashSet<>();
@@ -14,10 +15,19 @@ public class FuncaoDTO {
     public FuncaoDTO() {
     }
 
-    public FuncaoDTO(String funcao) {
+    public FuncaoDTO(Long id, String funcao) {
+        this.id = id;
         this.funcao = funcao;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
     public String getFuncao() {
         return funcao;
     }
