@@ -1,6 +1,6 @@
 package br.com.vintor.infrastructure.entities;
 
-import br.com.vintor.infrastructure.entities.enums.TipoDocumento;
+import br.com.vintor.business.enums.TipoDocumento;
 import jakarta.persistence.*;
 
 import java.io.Serializable;

@@ -1,6 +1,6 @@
 package br.com.vintor.business.dto.out;
 
-import br.com.vintor.infrastructure.entities.enums.FormaPagamento;
+import br.com.vintor.business.enums.FormaPagamento;
 
 import java.math.BigDecimal;
 import java.time.Instant;

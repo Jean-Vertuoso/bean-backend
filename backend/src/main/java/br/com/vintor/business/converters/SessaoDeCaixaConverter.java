@@ -7,13 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SessaoDeCaixaConverter {
 
-    private final UsuarioConverter usuarioConverter;
-
-    public SessaoDeCaixaConverter(UsuarioConverter usuarioConverter) {
-        this.usuarioConverter = usuarioConverter;
-    }
-
-    public SessaoDeCaixa paraSessaoDeCaixaEntity(SessaoDeCaixaDTORequest sessaoDeCaixaDTO){
+    public SessaoDeCaixa paraEntity(SessaoDeCaixaDTORequest sessaoDeCaixaDTO){
         SessaoDeCaixa entity = new SessaoDeCaixa();
 
         entity.setDataHoraAbertura(sessaoDeCaixaDTO.getDataHoraAbertura());
@@ -23,7 +17,6 @@ public class SessaoDeCaixaConverter {
         entity.setValorEsperado(sessaoDeCaixaDTO.getValorEsperado());
         entity.setObservacoes(sessaoDeCaixaDTO.getObservacoes());
         entity.setEncerrada(sessaoDeCaixaDTO.getEncerrada());
-        entity.setOperador(usuarioConverter.paraUsuarioEntity(sessaoDeCaixaDTO.getOperador()));
 
         return entity;
     }
