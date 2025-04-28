@@ -1,6 +1,6 @@
 package br.com.vintor.infrastructure.entities;
 
-import br.com.vintor.infrastructure.entities.enums.FormaPagamento;
+import br.com.vintor.business.enums.FormaPagamento;
 import jakarta.persistence.*;
 
 import java.io.Serializable;

@@ -1,6 +1,6 @@
 package br.com.vintor.business.dto.in;
 
-import br.com.vintor.infrastructure.entities.enums.TipoEmbalagem;
+import br.com.vintor.business.enums.TipoEmbalagem;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
