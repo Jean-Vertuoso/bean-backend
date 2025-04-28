@@ -1,4 +1,4 @@
-package br.com.vintor.infrastructure.entities.enums;
+package br.com.vintor.business.enums;
 
 public enum TipoEmbalagem {
     CAIXA,

@@ -2,7 +2,7 @@ package br.com.vintor.business.dto.out;
 
 import br.com.vintor.business.dto.EnderecoDTO;
 import br.com.vintor.business.dto.TelefoneDTO;
-import br.com.vintor.infrastructure.entities.enums.TipoDocumento;
+import br.com.vintor.business.enums.TipoDocumento;
 
 import java.time.LocalDate;
 import java.util.HashSet;

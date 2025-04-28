@@ -18,7 +18,7 @@ INSERT INTO tb_estoque (quantidade, quantidade_minima, valor_total, ultima_atual
 INSERT INTO tb_estoque (quantidade, quantidade_minima, valor_total, ultima_atualizacao, produto_id) VALUES (27, 5, 8175.06, '2025-04-14T14:22:22', 2);
 INSERT INTO tb_estoque (quantidade, quantidade_minima, valor_total, ultima_atualizacao, produto_id) VALUES (28, 5, 1817.2, '2025-04-14T10:34:22', 3);
 ------------------------------------------------------------------------------------------------------------------
-INSERT INTO tb_usuario (nome, email, senha) VALUES ('Jean da Rocha Vertuoso', 'jean@gmail.com', '$2a$12$2ost9bLyMICYzHVRD.VG0OjqyhiyO6aH6gcTgLYJR2cZJxO07qp.q');
+INSERT INTO tb_usuario (nome, email, senha) VALUES ('Jean da Rocha Vertuoso', 'jean@gmail.com', '$2a$10$wCLSve/wRNhOBCzIN87HqeBzzvyzd7RLokA7fWTBnrExzWW/zpfc.');
 ------------------------------------------------------------------------------------------------------------------
 INSERT INTO tb_funcao (funcao) VALUES ('ADMIN');
 INSERT INTO tb_funcao (funcao) VALUES ('OPERADOR');

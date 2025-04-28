@@ -26,7 +26,7 @@ public class VendaConverter {
         venda.setValorTotal(vendaDTO.getValorTotal());
         venda.setFormaPagamento(vendaDTO.getFormaPagamento());
         venda.setCliente(clienteConverter.paraClienteEntity(vendaDTO.getCliente()));
-        venda.setSessaoDeCaixa(sessaoDeCaixaConverter.paraSessaoDeCaixaEntity(vendaDTO.getSessaoDeCaixa()));
+        venda.setSessaoDeCaixa(sessaoDeCaixaConverter.paraEntity(vendaDTO.getSessaoDeCaixa()));
         venda.setDataHoraVenda(vendaDTO.getDataHoraVenda());
 
         return venda;
