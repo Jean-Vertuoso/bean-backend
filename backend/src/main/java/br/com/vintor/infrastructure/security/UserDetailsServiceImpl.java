@@ -1,8 +1,8 @@
 package br.com.vintor.infrastructure.security;
 
 
-import br.com.vintor.infrastructure.entities.Usuario;
-import br.com.vintor.infrastructure.repositories.UsuarioRepository;
+import br.com.vintor.infrastructure.entities.User;
+import br.com.vintor.infrastructure.repositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,25 +11,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    // Repositório para acessar dados de usuário no banco de dados
+    private final UserRepository userRepository;
 
-    private final UsuarioRepository usuarioRepository;
-
-    public UserDetailsServiceImpl(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
+    public UserDetailsServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    // Implementação do metodo para carregar detalhes do usuário pelo e-mail
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        // Busca o usuário no banco de dados pelo e-mail
-        Usuario usuario = usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + email));
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + email));
 
-        // Cria e retorna um objeto UserDetails com base no usuário encontrado
         return org.springframework.security.core.userdetails.User
-                .withUsername(usuario.getEmail()) // Define o nome de usuário como o e-mail
-                .password(usuario.getSenha()) // Define a senha do usuário
-                .build(); // Constrói o objeto UserDetails
+                .withUsername(user.getEmail())
+                .password(user.getPassword())
+                .build();
     }
 }
