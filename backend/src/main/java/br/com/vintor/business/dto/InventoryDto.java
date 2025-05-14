@@ -9,15 +9,17 @@ public class InventoryDto {
     private Double minimumQuantity;
     private BigDecimal totalValue;
     private LocalDateTime lastUpdated;
+    private Long productId;
 
     public InventoryDto() {
     }
 
-    public InventoryDto(Double quantity, Double minimumQuantity, BigDecimal totalValue, LocalDateTime lastUpdated) {
+    public InventoryDto(Double quantity, Double minimumQuantity, BigDecimal totalValue, LocalDateTime lastUpdated, Long productId) {
         this.quantity = quantity;
         this.minimumQuantity = minimumQuantity;
         this.totalValue = totalValue;
         this.lastUpdated = lastUpdated;
+        this.productId = productId;
     }
 
     public Double getQuantity() {
@@ -50,5 +52,13 @@ public class InventoryDto {
 
     public void setLastUpdated(LocalDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 }

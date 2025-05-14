@@ -2,6 +2,7 @@ package br.com.vintor.infrastructure.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,14 +27,29 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-        final String authorizationHeader = request.getHeader("Authorization");
+        //final String authorizationHeader = request.getHeader("Authorization");
+        Cookie[] cookies = request.getCookies();
+        String token = null;
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            final String token = authorizationHeader.substring(7);
-            final String username = jwtUtil.extrairEmailToken(token);
+        /*if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            token = authorizationHeader.substring(7);
+        }*/
 
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("jwt".equals(cookie.getName())) {
+                    token = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if (token != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            String username = jwtUtil.extrairEmailToken(token);
+
+            if (username != null) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
                 if (jwtUtil.validateToken(token, username)) {
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                             userDetails, null, userDetails.getAuthorities());
