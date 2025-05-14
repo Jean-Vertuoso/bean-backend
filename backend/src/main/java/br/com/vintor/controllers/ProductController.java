@@ -17,7 +17,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDtoResponse> saveProduct(@RequestHeader("Authorization") String token, @RequestBody ProductDtoRequest productDto){
+    public ResponseEntity<ProductDtoResponse> saveProduct(@RequestBody ProductDtoRequest productDto){
         return ResponseEntity.ok(productService.saveProduct(productDto));
     }
 }
