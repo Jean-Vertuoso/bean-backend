@@ -1,1 +1,1 @@
-# Backend do projeto Vintor
+# Backend do projeto Bean
