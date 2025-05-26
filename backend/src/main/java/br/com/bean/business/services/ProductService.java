@@ -18,8 +18,8 @@ public class ProductService {
         this.productConverter = productConverter;
     }
 
-    public ProductDtoResponse saveProduct(ProductDtoRequest productDto){
-        Product product = productConverter.toProductEntity(productDto);
-        return productConverter.toProductDto(productRepository.save(product));
+    public ProductDtoResponse saveProduct(ProductDtoRequest dto){
+        Product entity = productConverter.dtoToEntity(dto);
+        return productConverter.entityToDto(productRepository.save(entity));
     }
 }

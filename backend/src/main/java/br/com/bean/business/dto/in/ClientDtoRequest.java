@@ -1,36 +1,33 @@
 package br.com.bean.business.dto.in;
 
+import br.com.bean.business.dto.AddressDto;
+import br.com.bean.business.dto.PhoneDto;
 import br.com.bean.business.enums.DocumentType;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ClientDtoRequest {
 
-    private Long id;
     private String name;
     private LocalDate birthDate;
     private DocumentType documentType;
     private String documentNumber;
     private String email;
 
+    private Set<PhoneDto> phones = new HashSet<>();
+    private Set<AddressDto> addresses = new HashSet<>();;
+
     public ClientDtoRequest() {
     }
 
-    public ClientDtoRequest(Long id, String name, LocalDate birthDate, DocumentType documentType, String documentNumber, String email) {
-        this.id = id;
+    public ClientDtoRequest(String name, LocalDate birthDate, DocumentType documentType, String documentNumber, String email) {
         this.name = name;
         this.birthDate = birthDate;
         this.documentType = documentType;
         this.documentNumber = documentNumber;
         this.email = email;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -71,5 +68,13 @@ public class ClientDtoRequest {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<PhoneDto> getPhones() {
+        return phones;
+    }
+
+    public Set<AddressDto> getAddresses() {
+        return addresses;
     }
 }

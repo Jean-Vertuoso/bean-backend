@@ -1,8 +1,12 @@
 package br.com.bean.business.dto.out;
 
+import br.com.bean.business.dto.AddressDto;
+import br.com.bean.business.dto.PhoneDto;
 import br.com.bean.business.enums.DocumentType;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ClientDtoResponse {
 
@@ -12,6 +16,9 @@ public class ClientDtoResponse {
     private DocumentType documentType;
     private String documentNumber;
     private String email;
+
+    private Set<PhoneDto> phones = new HashSet<>();
+    private Set<AddressDto> addresses = new HashSet<>();
 
     public ClientDtoResponse() {
     }
@@ -71,5 +78,13 @@ public class ClientDtoResponse {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<PhoneDto> getPhones() {
+        return phones;
+    }
+
+    public Set<AddressDto> getAddresses() {
+        return addresses;
     }
 }

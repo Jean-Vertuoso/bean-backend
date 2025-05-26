@@ -9,25 +9,25 @@ import java.time.LocalDateTime;
 @Component
 public class InventoryConverter {
 
-    public Inventory toInventoryEntity(InventoryDto inventoryDto){
-        Inventory inventory = new Inventory();
+    public Inventory dtoToEntity(InventoryDto dto){
+        Inventory entity = new Inventory();
 
-        inventory.setQuantity(inventoryDto.getQuantity());
-        inventory.setMinimumQuantity(inventoryDto.getMinimumQuantity());
-        inventory.setTotalValue(inventoryDto.getTotalValue());
-        inventory.setLastUpdated(LocalDateTime.now());
+        entity.setQuantity(dto.getQuantity());
+        entity.setMinimumQuantity(dto.getMinimumQuantity());
+        entity.setTotalValue(dto.getTotalValue());
+        entity.setLastUpdated(LocalDateTime.now());
 
-        return inventory;
+        return entity;
     }
 
-    public InventoryDto toInventoryDto(Inventory inventory){
-        InventoryDto inventoryDto = new InventoryDto();
+    public InventoryDto entityToDto(Inventory entity){
+        InventoryDto dto = new InventoryDto();
 
-        inventoryDto.setQuantity(inventory.getQuantity());
-        inventoryDto.setMinimumQuantity(inventory.getMinimumQuantity());
-        inventoryDto.setTotalValue(inventory.getTotalValue());
-        inventoryDto.setLastUpdated(inventory.getLastUpdated());
+        dto.setQuantity(entity.getQuantity());
+        dto.setMinimumQuantity(entity.getMinimumQuantity());
+        dto.setTotalValue(entity.getTotalValue());
+        dto.setLastUpdated(entity.getLastUpdated());
 
-        return inventoryDto;
+        return dto;
     }
 }

@@ -7,16 +7,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class CashSessionConverter {
 
-    public CashSession toEntity(CashSessionDtoRequest cashSessionDto){
+    public CashSession dtoToEntity(CashSessionDtoRequest dto){
         CashSession entity = new CashSession();
 
-        entity.setOpeningTimestamp(cashSessionDto.getOpeningTimestamp());
-        entity.setClosingTimestamp(cashSessionDto.getClosingTimestamp());
-        entity.setOpeningAmount(cashSessionDto.getOpeningAmount());
-        entity.setClosingAmount(cashSessionDto.getClosingAmount());
-        entity.setExpectedAmount(cashSessionDto.getExpectedAmount());
-        entity.setNotes(cashSessionDto.getNotes());
-        entity.setClosed(cashSessionDto.getClosed());
+        entity.setOpeningTimestamp(dto.getOpeningTimestamp());
+        entity.setClosingTimestamp(dto.getClosingTimestamp());
+        entity.setOpeningAmount(dto.getOpeningAmount());
+        entity.setClosingAmount(dto.getClosingAmount());
+        entity.setExpectedAmount(dto.getExpectedAmount());
+        entity.setNotes(dto.getNotes());
+        entity.setClosed(dto.getClosed());
 
         return entity;
     }
