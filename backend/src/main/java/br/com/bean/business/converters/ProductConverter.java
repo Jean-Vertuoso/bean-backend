@@ -16,41 +16,41 @@ public class ProductConverter {
         this.inventoryConverter = inventoryConverter;
     }
 
-    public Product toProductEntity(ProductDtoRequest productDto){
-        Product product = new Product();
+    public Product dtoToEntity(ProductDtoRequest dto){
+        Product entity = new Product();
 
-        product.setName(productDto.getName());
-        product.setBrand(productDto.getBrand());
-        product.setPrice(productDto.getPrice());
-        product.setBarCode(productDto.getBarCode());
-        product.setImgUrl(productDto.getImgUrl());
-        product.setPackagingType(productDto.getPackagingType());
-        product.setUnitOfMeasure(productDto.getUnitOfMeasure());
-        product.setInventory(inventoryConverter.toInventoryEntity(productDto.getInventory()));
+        entity.setName(dto.getName());
+        entity.setBrand(dto.getBrand());
+        entity.setPrice(dto.getPrice());
+        entity.setBarCode(dto.getBarCode());
+        entity.setImgUrl(dto.getImgUrl());
+        entity.setPackagingType(dto.getPackagingType());
+        entity.setUnitOfMeasure(dto.getUnitOfMeasure());
+        entity.setInventory(inventoryConverter.dtoToEntity(dto.getInventory()));
 
-        return product;
+        return entity;
     }
 
-    public ProductDtoResponse toProductDto(Product product) {
-        ProductDtoResponse productDto = new ProductDtoResponse();
+    public ProductDtoResponse entityToDto(Product entity) {
+        ProductDtoResponse dto = new ProductDtoResponse();
 
-        productDto.setName(product.getName());
-        productDto.setBrand(product.getBrand());
-        productDto.setPrice(product.getPrice());
-        productDto.setBarCode(product.getBarCode());
-        productDto.setImgUrl(product.getImgUrl());
-        productDto.setPackagingType(product.getPackagingType());
-        productDto.setUnitOfMeasure(product.getUnitOfMeasure());
-        productDto.setInventory(inventoryConverter.toInventoryDto(product.getInventory()));
+        dto.setName(entity.getName());
+        dto.setBrand(entity.getBrand());
+        dto.setPrice(entity.getPrice());
+        dto.setBarCode(entity.getBarCode());
+        dto.setImgUrl(entity.getImgUrl());
+        dto.setPackagingType(entity.getPackagingType());
+        dto.setUnitOfMeasure(entity.getUnitOfMeasure());
+        dto.setInventory(inventoryConverter.entityToDto(entity.getInventory()));
 
-        return productDto;
+        return dto;
     }
 
-    public Category toCategoryEntity(CategoryDto categoryDto){
-        Category category = new Category();
+    public Category categoryDtoToEntity(CategoryDto dto){
+        Category entity = new Category();
 
-        category.setName(category.getName());
+        entity.setName(dto.getName());
 
-        return category;
+        return entity;
     }
 }

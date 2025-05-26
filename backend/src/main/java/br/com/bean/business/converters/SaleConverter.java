@@ -15,14 +15,14 @@ public class SaleConverter {
         this.cashSessionConverter = cashSessionConverter;
     }
 
-    public Sale toSaleEntity(SaleDtoRequest saleDto){
-        Sale sale = new Sale();
+    public Sale dtoToEntity(SaleDtoRequest dto){
+        Sale entity = new Sale();
 
-        sale.setSaleTimestamp(saleDto.getSaleTimestamp());
-        sale.setTotalDiscount(saleDto.getTotalDiscount());
-        sale.setTotalValue(saleDto.getTotalValue());
-        sale.setPaymentMethod(saleDto.getPaymentMethod());
+        entity.setSaleTimestamp(dto.getSaleTimestamp());
+        entity.setTotalDiscount(dto.getTotalDiscount());
+        entity.setTotalValue(dto.getTotalValue());
+        entity.setPaymentMethod(dto.getPaymentMethod());
 
-        return sale;
+        return entity;
     }
 }

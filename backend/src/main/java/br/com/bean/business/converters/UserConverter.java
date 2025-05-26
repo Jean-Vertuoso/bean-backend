@@ -19,45 +19,45 @@ public class UserConverter {
         this.saleConverter = saleConverter;
     }
 
-    public User toUserEntity(UserDtoRequest userDto){
-        User userEntity = new User();
+    public User dtoToEntity(UserDtoRequest dto){
+        User entity = new User();
 
-        userEntity.setName(userDto.getName());
-        userEntity.setEmail(userDto.getEmail());
-        userEntity.setPassword(userDto.getPassword());
+        entity.setName(dto.getName());
+        entity.setEmail(dto.getEmail());
+        entity.setPassword(dto.getPassword());
 
-        return userEntity;
-    }
-
-    public Set<Role> toRoleEntityList(Set<RoleDto> rolesDto){
-        return rolesDto.stream().map(this::toRoleEntity).collect(Collectors.toSet());
-    }
-
-    public Role toRoleEntity(RoleDto roleDto){
-        Role entity = new Role();
-        entity.setId(roleDto.getId());
-        entity.setRole(roleDto.getRole());
         return entity;
     }
 
-    public UserDtoResponse toUserDto(User userEntity){
-        UserDtoResponse userDto = new UserDtoResponse();
+    public UserDtoResponse entityToDto(User entity){
+        UserDtoResponse dto = new UserDtoResponse();
 
-        userDto.setName(userEntity.getName());
-        userDto.setEmail(userEntity.getEmail());
-        userDto.setPassword(userEntity.getPassword());
+        dto.setName(entity.getName());
+        dto.setEmail(entity.getEmail());
+        dto.setPassword(entity.getPassword());
 
-        return userDto;
+        return dto;
     }
 
-    public Set<RoleDto> paraListaFuncaoDto(Set<Role> funcoes){
-        return funcoes.stream().map(this::toRoleDto).collect(Collectors.toSet());
+    public Set<Role> toRoleEntityList(Set<RoleDto> dtoList){
+        return dtoList.stream().map(this::RoleDtoToEntity).collect(Collectors.toSet());
     }
 
-    public RoleDto toRoleDto(Role role){
-        RoleDto roleDto = new RoleDto();
-        roleDto.setId(role.getId());
-        roleDto.setRole(role.getRole());
-        return roleDto;
+    public Role RoleDtoToEntity(RoleDto dto){
+        Role entity = new Role();
+        entity.setId(dto.getId());
+        entity.setRole(dto.getRole());
+        return entity;
+    }
+
+    public Set<RoleDto> toRoleDtoList(Set<Role> entityList){
+        return entityList.stream().map(this::RoleEntityToDto).collect(Collectors.toSet());
+    }
+
+    public RoleDto RoleEntityToDto(Role entity){
+        RoleDto dto = new RoleDto();
+        dto.setId(entity.getId());
+        dto.setRole(entity.getRole());
+        return dto;
     }
 }
