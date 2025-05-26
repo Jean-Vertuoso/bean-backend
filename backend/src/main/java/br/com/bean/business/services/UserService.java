@@ -22,14 +22,12 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public UserDtoResponse saveUser(UserDtoRequest userDto){
-        emailExists(userDto.getEmail());
-        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        User user = userConverter.toUserEntity(userDto);
+    public UserDtoResponse saveUser(UserDtoRequest dto){
+        emailExists(dto.getEmail());
+        dto.setPassword(passwordEncoder.encode(dto.getPassword()));
+        User entity = userConverter.dtoToEntity(dto);
 
-        return userConverter.toUserDto(
-                userRepository.save(user)
-        );
+        return userConverter.entityToDto(userRepository.save(entity));
     }
 
     public void emailExists(String email){
