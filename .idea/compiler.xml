@@ -1,21 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel>
-      <module name="bean" target="21" />
-      <module name="vintor" target="21" />
-      <module name="vintor.main" target="21" />
-      <module name="vintor.test" target="21" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="21" />
   </component>
   <component name="JavacSettings">
-    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="bean" options="-parameters" />
-      <module name="bean.main" options="-parameters" />
-      <module name="bean.test" options="-parameters" />
-      <module name="br.com.bean.bean" options="-parameters" />
-      <module name="br.com.bean.bean.main" options="-parameters" />
-      <module name="br.com.bean.bean.test" options="-parameters" />
-    </option>
+    <option name="ADDITIONAL_OPTIONS_STRING" value="-parameters" />
   </component>
 </project>
