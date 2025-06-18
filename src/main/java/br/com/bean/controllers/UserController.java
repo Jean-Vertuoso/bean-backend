@@ -24,7 +24,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 @Tag(name = "Users", description = "Registration and management of users")
 @SecurityRequirement(name = SecurityConfig.SECURITY_SCHEME)
 public class UserController {
