@@ -1,6 +1,7 @@
 package br.com.bean.infrastructure.entities;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -8,12 +9,12 @@ import java.util.Set;
 
 @Entity
 @Table(name = "tb_role")
-public class Role {
+public class Role implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String role;
+    private String authority;
 
     @ManyToMany(mappedBy = "roles")
     private Set<User> users = new HashSet<>();
@@ -21,9 +22,9 @@ public class Role {
     public Role() {
     }
 
-    public Role(Long id, String role) {
+    public Role(Long id, String authority) {
         this.id = id;
-        this.role = role;
+        this.authority = authority;
     }
 
     public Long getId() {
@@ -34,12 +35,12 @@ public class Role {
         this.id = id;
     }
 
-    public String getRole() {
-        return role;
+    public String getAuthority() {
+        return authority;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
 
     public Set<User> getUsers() {

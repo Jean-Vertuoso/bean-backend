@@ -1,8 +1,7 @@
 package br.com.bean.business.converters;
 
 import br.com.bean.business.dto.CategoryDto;
-import br.com.bean.business.dto.in.ProductDtoRequest;
-import br.com.bean.business.dto.out.ProductDtoResponse;
+import br.com.bean.business.dto.ProductDto;
 import br.com.bean.infrastructure.entities.Category;
 import br.com.bean.infrastructure.entities.Product;
 import org.springframework.stereotype.Component;
@@ -16,7 +15,7 @@ public class ProductConverter {
         this.inventoryConverter = inventoryConverter;
     }
 
-    public Product dtoToEntity(ProductDtoRequest dto){
+    public Product dtoToEntity(ProductDto dto){
         Product entity = new Product();
 
         entity.setName(dto.getName());
@@ -26,13 +25,12 @@ public class ProductConverter {
         entity.setImgUrl(dto.getImgUrl());
         entity.setPackagingType(dto.getPackagingType());
         entity.setUnitOfMeasure(dto.getUnitOfMeasure());
-        entity.setInventory(inventoryConverter.dtoToEntity(dto.getInventory()));
 
         return entity;
     }
 
-    public ProductDtoResponse entityToDto(Product entity) {
-        ProductDtoResponse dto = new ProductDtoResponse();
+    public ProductDto entityToDto(Product entity) {
+        ProductDto dto = new ProductDto();
 
         dto.setName(entity.getName());
         dto.setBrand(entity.getBrand());
@@ -41,7 +39,6 @@ public class ProductConverter {
         dto.setImgUrl(entity.getImgUrl());
         dto.setPackagingType(entity.getPackagingType());
         dto.setUnitOfMeasure(entity.getUnitOfMeasure());
-        dto.setInventory(inventoryConverter.entityToDto(entity.getInventory()));
 
         return dto;
     }

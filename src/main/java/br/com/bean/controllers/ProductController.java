@@ -1,23 +1,25 @@
 package br.com.bean.controllers;
 
-import br.com.bean.business.dto.in.ProductDtoRequest;
-import br.com.bean.business.dto.out.ProductDtoResponse;
+import br.com.bean.business.dto.ProductDto;
 import br.com.bean.business.services.ProductService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
 
-    private ProductService productService;
+    private final ProductService service;
 
-    public ProductController(ProductService productService) {
-        this.productService = productService;
+    public ProductController(ProductService service) {
+        this.service = service;
     }
 
     @PostMapping
-    public ResponseEntity<ProductDtoResponse> saveProduct(@RequestBody ProductDtoRequest productDto){
-        return ResponseEntity.ok(productService.saveProduct(productDto));
+    public ResponseEntity<ProductDto> saveProduct(@RequestBody ProductDto productDto){
+        return ResponseEntity.ok(service.saveProduct(productDto));
     }
 }

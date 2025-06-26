@@ -19,13 +19,15 @@ INSERT INTO tb_inventory(quantity, minimum_quantity, total_value, last_updated, 
 INSERT INTO tb_inventory(quantity, minimum_quantity, total_value, last_updated, product_id) VALUES (27, 5, 8175.06, '2025-04-14T14:22:22', 2);
 INSERT INTO tb_inventory(quantity, minimum_quantity, total_value, last_updated, product_id) VALUES (28, 5, 1817.2, '2025-04-14T10:34:22', 3);
 ------------------------------------------------------------------------------------------------------------------
+INSERT INTO tb_user(name, email, password) VALUES ('Usuario Admin', 'admin@admin.com', '$2a$10$wCLSve/wRNhOBCzIN87HqeBzzvyzd7RLokA7fWTBnrExzWW/zpfc.');
 INSERT INTO tb_user(name, email, password) VALUES ('Jean da Rocha Vertuoso', 'jean@gmail.com', '$2a$10$wCLSve/wRNhOBCzIN87HqeBzzvyzd7RLokA7fWTBnrExzWW/zpfc.');
 ------------------------------------------------------------------------------------------------------------------
-INSERT INTO tb_role(role) VALUES ('ADMIN');
-INSERT INTO tb_role(role) VALUES ('OPERADOR');
+INSERT INTO tb_role(authority) VALUES ('ROLE_ADMIN');
+INSERT INTO tb_role(authority) VALUES ('ROLE_OPERATOR');
 ------------------------------------------------------------------------------------------------------------------
 INSERT INTO tb_user_role(user_id, role_id) VALUES (1,1);
 INSERT INTO tb_user_role(user_id, role_id) VALUES (1,2);
+INSERT INTO tb_user_role(user_id, role_id) VALUES (2,2);
 ------------------------------------------------------------------------------------------------------------------
 INSERT INTO tb_client(name, birth_date, document_type, document_number, email) VALUES ('João da Silva', '1974-10-22', 'CPF', '85214467052', 'joao@gmail.com');
 INSERT INTO tb_client(name, birth_date, document_type, document_number, email) VALUES ('ONG Amigo dos animais', '2002-08-03', 'CNPJ', '56366038000137', 'ongamigodosanimais@gmail.com');

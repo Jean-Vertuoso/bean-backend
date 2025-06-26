@@ -14,8 +14,10 @@ public class Inventory implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private Double quantity;
     private Double minimumQuantity;
+    @Column(nullable = false)
     private BigDecimal totalValue;
     private LocalDateTime lastUpdated;
 
@@ -81,6 +83,12 @@ public class Inventory implements Serializable {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    @PrePersist
+    @PreUpdate
+    private void prePersistOrUpdate(){
+        this.lastUpdated = LocalDateTime.now();
     }
 
     @Override

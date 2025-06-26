@@ -1,12 +1,11 @@
-package br.com.bean.business.dto.in;
+package br.com.bean.business.dto;
 
-import br.com.bean.business.dto.InventoryDto;
 import br.com.bean.business.enums.PackagingType;
 import br.com.bean.business.enums.UnitOfMeasure;
 
 import java.math.BigDecimal;
 
-public class ProductDtoRequest {
+public class ProductDto {
 
     private String name;
     private String brand;
@@ -15,12 +14,11 @@ public class ProductDtoRequest {
     private String imgUrl;
     private PackagingType packagingType;
     private UnitOfMeasure unitOfMeasure;
-    private InventoryDto inventory;
 
-    public ProductDtoRequest() {
+    public ProductDto() {
     }
 
-    public ProductDtoRequest(String name, String brand, BigDecimal price, String barCode, String imgUrl, PackagingType packagingType, UnitOfMeasure unitOfMeasure, InventoryDto inventory) {
+    public ProductDto(String name, String brand, BigDecimal price, String barCode, String imgUrl, PackagingType packagingType, UnitOfMeasure unitOfMeasure) {
         this.name = name;
         this.brand = brand;
         this.price = price;
@@ -28,7 +26,6 @@ public class ProductDtoRequest {
         this.imgUrl = imgUrl;
         this.packagingType = packagingType;
         this.unitOfMeasure = unitOfMeasure;
-        this.inventory = inventory;
     }
 
     public String getName() {
@@ -85,13 +82,5 @@ public class ProductDtoRequest {
 
     public void setUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
         this.unitOfMeasure = unitOfMeasure;
-    }
-
-    public InventoryDto getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(InventoryDto inventory) {
-        this.inventory = inventory;
     }
 }

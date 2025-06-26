@@ -3,14 +3,14 @@ package br.com.bean.business.dto;
 public class RoleDto {
 
     private Long id;
-    private String role;
+    private String authority;
 
     public RoleDto() {
     }
 
-    public RoleDto(Long id, String role) {
+    public RoleDto(Long id, String authority) {
         this.id = id;
-        this.role = role;
+        this.authority = authority;
     }
 
     public Long getId() {
@@ -21,11 +21,11 @@ public class RoleDto {
         this.id = id;
     }
 
-    public String getRole() {
-        return role;
+    public String getAuthority() {
+        return authority;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
 }

@@ -1,6 +1,6 @@
 package br.com.bean.business.converters;
 
-import br.com.bean.business.dto.in.SaleDtoRequest;
+import br.com.bean.business.dto.SaleDto;
 import br.com.bean.infrastructure.entities.Sale;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +15,7 @@ public class SaleConverter {
         this.cashSessionConverter = cashSessionConverter;
     }
 
-    public Sale dtoToEntity(SaleDtoRequest dto){
+    public Sale dtoToEntity(SaleDto dto){
         Sale entity = new Sale();
 
         entity.setSaleTimestamp(dto.getSaleTimestamp());

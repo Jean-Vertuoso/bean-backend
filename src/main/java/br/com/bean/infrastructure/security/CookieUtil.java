@@ -15,7 +15,7 @@ public class CookieUtil {
                 .secure(false)
                 .path("/")
                 .maxAge(Duration.ofHours(2))
-                .sameSite("None")
+                .sameSite("Lax")
                 .build();
 
         response.addHeader("Set-Cookie", cookie.toString());

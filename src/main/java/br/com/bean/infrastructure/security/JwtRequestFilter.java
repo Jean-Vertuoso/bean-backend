@@ -24,16 +24,18 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     }
 
     @Override
-    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-        //final String authorizationHeader = request.getHeader("Authorization");
-        Cookie[] cookies = request.getCookies();
-        String token = null;
+        String servletPath = request.getServletPath();
 
-        /*if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            token = authorizationHeader.substring(7);
-        }*/
+        if (request.getServletPath().equals("/users/login")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+        String token = null;
+        Cookie[] cookies = request.getCookies();
 
         if (cookies != null) {
             for (Cookie cookie : cookies) {
@@ -45,16 +47,19 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
 
         if (token != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            String username = jwtUtil.extrairEmailToken(token);
+            try {
+                String username = jwtUtil.extrairEmailToken(token);
 
-            if (username != null) {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                if (username != null && jwtUtil.validateToken(token, username)) {
+                    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-                if (jwtUtil.validateToken(token, username)) {
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                             userDetails, null, userDetails.getAuthorities());
+
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
+            } catch (Exception e) {
+                SecurityContextHolder.clearContext();
             }
         }
 
