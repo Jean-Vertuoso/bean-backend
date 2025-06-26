@@ -1,14 +1,12 @@
-package br.com.bean.business.dto.in;
+package br.com.bean.business.dto;
 
-import br.com.bean.business.dto.AddressDto;
-import br.com.bean.business.dto.PhoneDto;
 import br.com.bean.business.enums.DocumentType;
 
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ClientDtoRequest {
+public class ClientDto {
 
     private String name;
     private LocalDate birthDate;
@@ -17,12 +15,12 @@ public class ClientDtoRequest {
     private String email;
 
     private Set<PhoneDto> phones = new HashSet<>();
-    private Set<AddressDto> addresses = new HashSet<>();;
+    private Set<AddressDto> addresses = new HashSet<>();
 
-    public ClientDtoRequest() {
+    public ClientDto() {
     }
 
-    public ClientDtoRequest(String name, LocalDate birthDate, DocumentType documentType, String documentNumber, String email) {
+    public ClientDto(String name, LocalDate birthDate, DocumentType documentType, String documentNumber, String email) {
         this.name = name;
         this.birthDate = birthDate;
         this.documentType = documentType;

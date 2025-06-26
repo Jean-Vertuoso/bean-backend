@@ -1,9 +1,9 @@
 package br.com.bean.controllers;
 
-import br.com.bean.business.dto.in.LoginDtoRequest;
-import br.com.bean.business.dto.in.UserDtoRequest;
-import br.com.bean.business.dto.out.LoginDtoResponse;
-import br.com.bean.business.dto.out.UserDtoResponse;
+import br.com.bean.business.dto.LoginRequestDto;
+import br.com.bean.business.dto.LoginResponseDto;
+import br.com.bean.business.dto.UserDto;
+import br.com.bean.business.dto.UserLoggedDto;
 import br.com.bean.business.services.UserService;
 import br.com.bean.infrastructure.security.CookieUtil;
 import br.com.bean.infrastructure.security.JwtUtil;
@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,16 +30,21 @@ import java.net.URI;
 @SecurityRequirement(name = SecurityConfig.SECURITY_SCHEME)
 public class UserController {
 
-    private final UserService userService;
+    private final UserService service;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
     private final CookieUtil cookieUtil;
 
-    public UserController(UserService userService, AuthenticationManager authenticationManager, JwtUtil jwtUtil, CookieUtil cookieUtil) {
-        this.userService = userService;
+    public UserController(UserService service, AuthenticationManager authenticationManager, JwtUtil jwtUtil, CookieUtil cookieUtil) {
+        this.service = service;
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.cookieUtil = cookieUtil;
+    }
+
+    @GetMapping(value = "/me")
+    public ResponseEntity<UserLoggedDto> getMe(){
+        return ResponseEntity.ok(service.getMe());
     }
 
     @PostMapping("/login")
@@ -46,16 +52,36 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "User successfully logged in")
     @ApiResponse(responseCode = "401", description = "Invalid credentials")
     @ApiResponse(responseCode = "500", description = "Server error")
-    public LoginDtoResponse login(@RequestBody LoginDtoRequest loginDto, HttpServletResponse response){
+    public LoginResponseDto login(@RequestBody LoginRequestDto loginDto, HttpServletResponse response){
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDto.getEmail(),
-                        loginDto.getPassword())
+                new UsernamePasswordAuthenticationToken(
+                        loginDto.getEmail(),
+                        loginDto.getPassword()
+                )
         );
 
         String jwt = jwtUtil.generateToken(authentication.getName());
         cookieUtil.addJwtToCookie(response, jwt);
 
-        return new LoginDtoResponse("Bearer "+ jwt, loginDto.getEmail());
+        return new LoginResponseDto(
+                "Bearer "+ jwt,
+                loginDto.getEmail()
+        );
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(HttpServletResponse response) {
+        ResponseCookie cookie = ResponseCookie.from("jwt", "")
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(0)
+                .sameSite("None")
+                .build();
+
+        response.addHeader("Set-Cookie", cookie.toString());
+
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/check")
@@ -73,13 +99,13 @@ public class UserController {
     @ApiResponse(responseCode = "401", description = "Invalid credentials")
     @ApiResponse(responseCode = "409", description = "User already registered")
     @ApiResponse(responseCode = "500", description = "Server error")
-    public ResponseEntity<UserDtoResponse> saveUser(@RequestBody UserDtoRequest userDto){
-        UserDtoResponse userDtoResponse = userService.saveUser(userDto);
+    public ResponseEntity<UserDto> saveUser(@RequestBody UserDto dtoRequest){
+        UserDto dtoResponse = service.saveUser(dtoRequest);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(userDtoResponse.getId())
+                .buildAndExpand(dtoResponse.getId())
                 .toUri();
 
-        return ResponseEntity.created(uri).body(userDtoResponse);
+        return ResponseEntity.created(uri).body(dtoResponse);
     }
 }

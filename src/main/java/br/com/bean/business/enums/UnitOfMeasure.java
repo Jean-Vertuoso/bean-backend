@@ -1,13 +1,13 @@
 package br.com.bean.business.enums;
 
 public enum UnitOfMeasure {
-    UNIT("Unidade"),
-    METER("Metro"),
     CENTIMETER("Centímetro"),
-    KILOGRAM("Quilograma"),
     GRAM("Grama"),
+    KILOGRAM("Quilograma"),
     LITER("Litro"),
-    MILLILITER("Mililitro");
+    METER("Metro"),
+    MILLILITER("Mililitro"),
+    UNIT("Unidade");
 
     private final String displayName;
 

@@ -1,13 +1,13 @@
 package br.com.bean.business.converters;
 
-import br.com.bean.business.dto.in.CashSessionDtoRequest;
+import br.com.bean.business.dto.CashSessionDto;
 import br.com.bean.infrastructure.entities.CashSession;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CashSessionConverter {
 
-    public CashSession dtoToEntity(CashSessionDtoRequest dto){
+    public CashSession dtoToEntity(CashSessionDto dto){
         CashSession entity = new CashSession();
 
         entity.setOpeningTimestamp(dto.getOpeningTimestamp());

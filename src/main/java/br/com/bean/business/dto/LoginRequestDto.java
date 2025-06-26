@@ -1,26 +1,16 @@
-package br.com.bean.business.dto.in;
+package br.com.bean.business.dto;
 
-public class UserDtoRequest {
+public class LoginRequestDto {
 
-    private String name;
     private String email;
     private String password;
 
-    public UserDtoRequest() {
+    public LoginRequestDto() {
     }
 
-    public UserDtoRequest(String name, String email, String password) {
-        this.name = name;
+    public LoginRequestDto(String email, String password) {
         this.email = email;
         this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getEmail() {

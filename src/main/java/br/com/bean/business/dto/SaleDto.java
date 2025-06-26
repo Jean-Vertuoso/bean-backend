@@ -1,25 +1,25 @@
-package br.com.bean.business.dto.in;
+package br.com.bean.business.dto;
 
 import br.com.bean.business.enums.PaymentMethod;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 
-public class SaleDtoRequest {
+public class SaleDto {
 
     private Long id;
     private Instant saleTimestamp;
     private BigDecimal totalDiscount;
     private BigDecimal totalValue;
     private PaymentMethod paymentMethod;
-    private ClientDtoRequest client;
-    private CashSessionDtoRequest cashSession;
-    private UserDtoRequest operator;
+    private ClientDto client;
+    private CashSessionDto cashSession;
+    private UserDto operator;
 
-    public SaleDtoRequest() {
+    public SaleDto() {
     }
 
-    public SaleDtoRequest(Long id, Instant saleTimestamp, BigDecimal totalDiscount, BigDecimal totalValue, PaymentMethod paymentMethod, ClientDtoRequest client, CashSessionDtoRequest cashSession, UserDtoRequest operator) {
+    public SaleDto(Long id, Instant saleTimestamp, BigDecimal totalDiscount, BigDecimal totalValue, PaymentMethod paymentMethod, ClientDto client, CashSessionDto cashSession, UserDto operator) {
         this.id = id;
         this.saleTimestamp = saleTimestamp;
         this.totalDiscount = totalDiscount;
@@ -70,27 +70,27 @@ public class SaleDtoRequest {
         this.paymentMethod = paymentMethod;
     }
 
-    public ClientDtoRequest getClient() {
+    public ClientDto getClient() {
         return client;
     }
 
-    public void setClient(ClientDtoRequest client) {
+    public void setClient(ClientDto client) {
         this.client = client;
     }
 
-    public CashSessionDtoRequest getCashSession() {
+    public CashSessionDto getCashSession() {
         return cashSession;
     }
 
-    public void setCashSession(CashSessionDtoRequest cashSession) {
+    public void setCashSession(CashSessionDto cashSession) {
         this.cashSession = cashSession;
     }
 
-    public UserDtoRequest getOperator() {
+    public UserDto getOperator() {
         return operator;
     }
 
-    public void setOperator(UserDtoRequest operator) {
+    public void setOperator(UserDto operator) {
         this.operator = operator;
     }
 }
