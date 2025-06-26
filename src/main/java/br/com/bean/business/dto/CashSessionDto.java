@@ -1,9 +1,9 @@
-package br.com.bean.business.dto.out;
+package br.com.bean.business.dto;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 
-public class CashSessionDtoResponse {
+public class CashSessionDto {
 
     private Long id;
     private Instant openingTimestamp;
@@ -13,12 +13,12 @@ public class CashSessionDtoResponse {
     private BigDecimal expectedAmount;
     private String notes;
     private Boolean closed;
-    private UserDtoResponse operator;
+    private UserDto operator;
 
-    public CashSessionDtoResponse() {
+    public CashSessionDto() {
     }
 
-    public CashSessionDtoResponse(Long id, Instant openingTimestamp, Instant closingTimestamp, BigDecimal openingAmount, BigDecimal closingAmount, BigDecimal expectedAmount, String notes, Boolean closed, UserDtoResponse operator) {
+    public CashSessionDto(Long id, Instant openingTimestamp, Instant closingTimestamp, BigDecimal openingAmount, BigDecimal closingAmount, BigDecimal expectedAmount, String notes, Boolean closed, UserDto operator) {
         this.id = id;
         this.openingTimestamp = openingTimestamp;
         this.closingTimestamp = closingTimestamp;
@@ -94,11 +94,11 @@ public class CashSessionDtoResponse {
         this.closed = closed;
     }
 
-    public UserDtoResponse getOperator() {
+    public UserDto getOperator() {
         return operator;
     }
 
-    public void setOperator(UserDtoResponse operator) {
+    public void setOperator(UserDto operator) {
         this.operator = operator;
     }
 }

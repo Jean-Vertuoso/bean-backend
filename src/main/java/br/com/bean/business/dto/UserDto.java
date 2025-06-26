@@ -1,27 +1,31 @@
-package br.com.bean.business.dto.out;
+package br.com.bean.business.dto;
 
-public class UserDtoResponse {
+import java.util.HashSet;
+import java.util.Set;
+
+public class UserDto {
 
     private Long id;
     private String name;
     private String email;
     private String password;
+    private Set<String> roles = new HashSet<>();
 
-    public UserDtoResponse() {
+    public UserDto() {
     }
 
-    public UserDtoResponse(Long id, String name, String email, String password) {
+    public UserDto(Long id, String name, String email, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
     }
 
-    public Long getId() {
+    public Long getId(){
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long id){
         this.id = id;
     }
 
@@ -47,5 +51,9 @@ public class UserDtoResponse {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<String> getRoles() {
+        return roles;
     }
 }

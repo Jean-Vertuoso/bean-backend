@@ -1,7 +1,6 @@
 package br.com.bean.controllers;
 
-import br.com.bean.business.dto.in.ClientDtoRequest;
-import br.com.bean.business.dto.out.ClientDtoResponse;
+import br.com.bean.business.dto.ClientDto;
 import br.com.bean.business.services.ClientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,14 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/clients")
 public class ClientController {
 
-    private ClientService clientService;
+    private ClientService service;
 
-    public ClientController(ClientService clientService) {
-        this.clientService = clientService;
+    public ClientController(ClientService service) {
+        this.service = service;
     }
 
     @PostMapping
-    public ResponseEntity<ClientDtoResponse> saveClient(@RequestBody ClientDtoRequest dto){
-        return ResponseEntity.ok(clientService.saveClient(dto));
+    public ResponseEntity<ClientDto> saveClient(@RequestBody ClientDto dto){
+        return ResponseEntity.ok(service.saveClient(dto));
     }
 }

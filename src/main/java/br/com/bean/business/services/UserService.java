@@ -1,33 +1,46 @@
 package br.com.bean.business.services;
 
 import br.com.bean.business.converters.UserConverter;
-import br.com.bean.business.dto.in.UserDtoRequest;
-import br.com.bean.business.dto.out.UserDtoResponse;
+import br.com.bean.business.dto.UserDto;
+import br.com.bean.business.dto.UserLoggedDto;
+import br.com.bean.infrastructure.entities.Role;
 import br.com.bean.infrastructure.entities.User;
 import br.com.bean.infrastructure.exceptions.ConflictException;
+import br.com.bean.infrastructure.exceptions.ResourceNotFoundException;
 import br.com.bean.infrastructure.repositories.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
-public class UserService {
+public class UserService{
 
-    private final UserRepository userRepository;
-    private final UserConverter userConverter;
+    private final UserRepository repository;
+    private final UserConverter converter;
+    private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, UserConverter userConverter, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.userConverter = userConverter;
+    public UserService(UserRepository repository, UserConverter converter, RoleService roleService, PasswordEncoder passwordEncoder) {
+        this.repository = repository;
+        this.converter = converter;
+        this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
     }
 
-    public UserDtoResponse saveUser(UserDtoRequest dto){
+    @Transactional
+    public UserDto saveUser(UserDto dto){
         emailExists(dto.getEmail());
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
-        User entity = userConverter.dtoToEntity(dto);
 
-        return userConverter.entityToDto(userRepository.save(entity));
+        Set<Role> roles = roleService.findByAuthority(dto.getRoles());
+
+        User entity = converter.dtoToEntity(dto, roles);
+
+        return converter.entityToDto(repository.save(entity));
     }
 
     public void emailExists(String email){
@@ -42,6 +55,32 @@ public class UserService {
     }
 
     public boolean checkIfEmailExists(String email){
-        return userRepository.existsByEmail(email);
+        return repository.existsByEmail(email);
+    }
+
+    @Transactional(readOnly = true)
+    public UserLoggedDto getMe(){
+        User user = authenticated();
+        UserLoggedDto userLogged = new UserLoggedDto(
+                user.getId(),
+                user.getName(),
+                user.getEmail()
+        );
+
+        userLogged.getRoles().addAll(
+                user.getRoles().stream().map(Role::getAuthority).collect(Collectors.toSet())
+        );
+
+        return userLogged;
+    }
+
+    @Transactional(readOnly = true)
+    protected User authenticated() {
+
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        return repository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found by email "+ email));
+
     }
 }

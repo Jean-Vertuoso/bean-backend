@@ -1,21 +1,19 @@
 package br.com.bean.business.converters;
 
 import br.com.bean.business.dto.AddressDto;
+import br.com.bean.business.dto.ClientDto;
 import br.com.bean.business.dto.PhoneDto;
-import br.com.bean.business.dto.in.ClientDtoRequest;
-import br.com.bean.business.dto.out.ClientDtoResponse;
 import br.com.bean.infrastructure.entities.Address;
 import br.com.bean.infrastructure.entities.Client;
 import br.com.bean.infrastructure.entities.Phone;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
 public class ClientConverter {
 
-    public Client dtoToEntity(ClientDtoRequest dto){
+    public Client dtoToEntity(ClientDto dto){
         Client entity = new Client();
 
         entity.setName(dto.getName());
@@ -23,31 +21,27 @@ public class ClientConverter {
         entity.setDocumentType(dto.getDocumentType());
         entity.setDocumentNumber(dto.getDocumentNumber());
         entity.setEmail(dto.getEmail());
-        entity.getPhones().addAll(toPhoneEntityList(dto.getPhones()));
-        entity.getAddresses().addAll(toAddressEntityList(dto.getAddresses()));
+        entity.getPhones().addAll(dto.getPhones().stream().map(this::dtoToEntity).collect(Collectors.toSet()));
+        entity.getAddresses().addAll(dto.getAddresses().stream().map(this::dtoToEntity).collect(Collectors.toSet()));
 
         return entity;
     }
 
-    public ClientDtoResponse entityToDto(Client entity){
-        ClientDtoResponse dto = new ClientDtoResponse();
+    public ClientDto entityToDto(Client entity){
+        ClientDto dto = new ClientDto();
 
         dto.setName(entity.getName());
         dto.setBirthDate(entity.getBirthDate());
         dto.setDocumentType(entity.getDocumentType());
         dto.setDocumentNumber(entity.getDocumentNumber());
         dto.setEmail(entity.getEmail());
-        dto.getPhones().addAll(toPhoneDtoList(entity.getPhones()));
-        dto.getAddresses().addAll(toAddressDtoList(entity.getAddresses()));
+        dto.getPhones().addAll(entity.getPhones().stream().map(this::entityToDto).collect(Collectors.toSet()));
+        dto.getAddresses().addAll(entity.getAddresses().stream().map(this::entityToDto).collect(Collectors.toSet()));
 
         return dto;
     }
 
-    private Set<Phone> toPhoneEntityList(Set<PhoneDto> dtoList){
-        return dtoList.stream().map(this::phoneDtoToEntity).collect(Collectors.toSet());
-    }
-
-    private Phone phoneDtoToEntity(PhoneDto dto){
+    private Phone dtoToEntity(PhoneDto dto){
         Phone entity = new Phone();
 
         entity.setAreaCode(dto.getAreaCode());
@@ -56,11 +50,7 @@ public class ClientConverter {
         return entity;
     }
 
-    private Set<Address> toAddressEntityList(Set<AddressDto> dtoList){
-        return dtoList.stream().map(this::addressDtoToEntity).collect(Collectors.toSet());
-    }
-
-    private Address addressDtoToEntity(AddressDto dto){
+    private Address dtoToEntity(AddressDto dto){
         Address entity = new Address();
 
         entity.setPostalCode(dto.getPostalCode());
@@ -73,11 +63,7 @@ public class ClientConverter {
         return entity;
     }
 
-    private Set<PhoneDto> toPhoneDtoList(Set<Phone> entityList){
-        return entityList.stream().map(this::phoneEntityToDto).collect(Collectors.toSet());
-    }
-
-    private PhoneDto phoneEntityToDto(Phone entity){
+    private PhoneDto entityToDto(Phone entity){
         PhoneDto dto = new PhoneDto();
 
         dto.setAreaCode(entity.getAreaCode());
@@ -86,11 +72,7 @@ public class ClientConverter {
         return dto;
     }
 
-    private Set<AddressDto> toAddressDtoList(Set<Address> entityList){
-        return entityList.stream().map(this::addressEntityToDto).collect(Collectors.toSet());
-    }
-
-    private AddressDto addressEntityToDto(Address entity){
+    private AddressDto entityToDto(Address entity){
         AddressDto dto = new AddressDto();
 
         dto.setPostalCode(entity.getPostalCode());

@@ -1,25 +1,26 @@
 package br.com.bean.business.services;
 
 import br.com.bean.business.converters.ProductConverter;
-import br.com.bean.business.dto.in.ProductDtoRequest;
-import br.com.bean.business.dto.out.ProductDtoResponse;
+import br.com.bean.business.dto.ProductDto;
 import br.com.bean.infrastructure.entities.Product;
 import br.com.bean.infrastructure.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProductService {
 
-    private ProductRepository productRepository;
-    private ProductConverter productConverter;
+    private final ProductRepository repository;
+    private final ProductConverter converter;
 
-    public ProductService(ProductRepository productRepository, ProductConverter productConverter) {
-        this.productRepository = productRepository;
-        this.productConverter = productConverter;
+    public ProductService(ProductRepository repository, ProductConverter converter) {
+        this.repository = repository;
+        this.converter = converter;
     }
 
-    public ProductDtoResponse saveProduct(ProductDtoRequest dto){
-        Product entity = productConverter.dtoToEntity(dto);
-        return productConverter.entityToDto(productRepository.save(entity));
+    @Transactional
+    public ProductDto saveProduct(ProductDto dto){
+        Product entity = converter.dtoToEntity(dto);
+        return converter.entityToDto(repository.save(entity));
     }
 }

@@ -1,17 +1,17 @@
-package br.com.bean.business.dto.out;
+package br.com.bean.business.dto;
 
 import java.math.BigDecimal;
 
-public class SaleItemDtoResponse {
+public class SaleItemDto {
 
     private Long productId;
     private Double quantity;
     private BigDecimal discount;
 
-    public SaleItemDtoResponse() {
+    public SaleItemDto() {
     }
 
-    public SaleItemDtoResponse(Long productId, Double quantity, BigDecimal discount) {
+    public SaleItemDto(Long productId, Double quantity, BigDecimal discount) {
         this.productId = productId;
         this.quantity = quantity;
         this.discount = discount;
