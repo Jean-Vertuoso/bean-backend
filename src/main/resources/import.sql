@@ -1,15 +1,16 @@
-INSERT INTO tb_category(name) VALUES ('Rações para cães');
-INSERT INTO tb_category(name) VALUES ('Rações para gatos');
-INSERT INTO tb_category(name) VALUES ('Rações para equinos');
-INSERT INTO tb_category(name) VALUES ('Rações para aves');
-INSERT INTO tb_category(name) VALUES ('Sementes');
-INSERT INTO tb_category(name) VALUES ('Fertilizantes');
-INSERT INTO tb_category(name) VALUES ('Ferramentas');
 INSERT INTO tb_category(name) VALUES ('Alimentos');
+INSERT INTO tb_category(name) VALUES ('Ferramentas');
+INSERT INTO tb_category(name) VALUES ('Fertilizantes');
+INSERT INTO tb_category(name) VALUES ('Rações para aves');
+INSERT INTO tb_category(name) VALUES ('Rações para cães');
+INSERT INTO tb_category(name) VALUES ('Rações para equinos');
+INSERT INTO tb_category(name) VALUES ('Rações para gatos');
+INSERT INTO tb_category(name) VALUES ('Sementes');
+INSERT INTO tb_category(name) VALUES ('Solúveis');
 ------------------------------------------------------------------------------------------------------------------
-INSERT INTO tb_product(name, brand, price, bar_code, img_url, packaging_type, unit_of_measure) VALUES ('PURINA Pro Plan Ração Cães Adultos Médios Pro Plan Frango 15Kg', 'Purina Pro Plan', 299.99, '7891234567890', '', 'BAG', 'UNIT');
-INSERT INTO tb_product(name, brand, price, bar_code, img_url, packaging_type, unit_of_measure) VALUES ('Ração Royal Canin Feline Gastro Intestinal 4Kg', 'ROYAL CANIN', 302.78, '7896543210125', '', 'BAG', 'UNIT');
-INSERT INTO tb_product(name, brand, price, bar_code, img_url, packaging_type, unit_of_measure) VALUES ('Megazoo Ração Mix Calopsitas 900G', 'megazoo', 64.90, '7890001112228', '', 'PACKAGE', 'UNIT');
+INSERT INTO tb_product(name, brand, price, bar_code, img_url, packaging_type, unit_of_measure) VALUES ('PURINA Pro Plan Ração Cães Adultos Médios Pro Plan Frango 15Kg', 'Purina Pro Plan', 299.99, '7891234567890', 'https://m.media-amazon.com/images/I/71TeDXUSKdL._AC_SL1500_.jpg', 'BAG', 'UNIT');
+INSERT INTO tb_product(name, brand, price, bar_code, img_url, packaging_type, unit_of_measure) VALUES ('Ração Royal Canin Feline Gastro Intestinal 4Kg', 'ROYAL CANIN', 302.78, '7896543210125', 'https://m.media-amazon.com/images/I/51XQFG1VUYL._AC_SL1200_.jpg', 'BAG', 'UNIT');
+INSERT INTO tb_product(name, brand, price, bar_code, img_url, packaging_type, unit_of_measure) VALUES ('Megazoo Ração Mix Calopsitas 900G', 'megazoo', 64.90, '7890001112228', 'https://m.media-amazon.com/images/I/71NA9ETeEkL._AC_SL1200_.jpg', 'PACKAGE', 'UNIT');
 ------------------------------------------------------------------------------------------------------------------
 INSERT INTO tb_product_category(product_id, category_id) VALUES (1,1);
 INSERT INTO tb_product_category(product_id, category_id) VALUES (2,2);
