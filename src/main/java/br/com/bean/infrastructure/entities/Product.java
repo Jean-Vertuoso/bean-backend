@@ -23,6 +23,7 @@ public class Product implements Serializable {
     private String brand;
     private BigDecimal price;
     private String barCode;
+    @Column(columnDefinition = "TEXT")
     private String imgUrl;
 
     @Enumerated(EnumType.STRING)
@@ -136,6 +137,10 @@ public class Product implements Serializable {
 
     public Set<SaleItem> getItems() {
         return items;
+    }
+
+    public void addCategory(Category category){
+        this.categories.add(category);
     }
 
     @Override

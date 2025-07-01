@@ -4,6 +4,8 @@ import br.com.bean.business.enums.PackagingType;
 import br.com.bean.business.enums.UnitOfMeasure;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ProductDto {
 
@@ -14,11 +16,12 @@ public class ProductDto {
     private String imgUrl;
     private PackagingType packagingType;
     private UnitOfMeasure unitOfMeasure;
+    private Set<Long> categoryIds = new HashSet<>();
 
     public ProductDto() {
     }
 
-    public ProductDto(String name, String brand, BigDecimal price, String barCode, String imgUrl, PackagingType packagingType, UnitOfMeasure unitOfMeasure) {
+    public ProductDto(String name, String brand, BigDecimal price, String barCode, String imgUrl, PackagingType packagingType, UnitOfMeasure unitOfMeasure, Set<Long> categoryIds) {
         this.name = name;
         this.brand = brand;
         this.price = price;
@@ -26,6 +29,7 @@ public class ProductDto {
         this.imgUrl = imgUrl;
         this.packagingType = packagingType;
         this.unitOfMeasure = unitOfMeasure;
+        this.categoryIds = categoryIds;
     }
 
     public String getName() {
@@ -82,5 +86,9 @@ public class ProductDto {
 
     public void setUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
         this.unitOfMeasure = unitOfMeasure;
+    }
+
+    public Set<Long> getCategoryIds() {
+        return categoryIds;
     }
 }
