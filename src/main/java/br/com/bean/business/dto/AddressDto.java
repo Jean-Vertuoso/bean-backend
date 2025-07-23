@@ -4,6 +4,7 @@ public class AddressDto {
 
     private String street;
     private String number;
+    private String complement;
     private String neighborhood;
     private String city;
     private String state;
@@ -12,9 +13,10 @@ public class AddressDto {
     public AddressDto() {
     }
 
-    public AddressDto(String street, String number, String neighborhood, String city, String state, String postalCode) {
+    public AddressDto(String street, String number, String complement, String neighborhood, String city, String state, String postalCode) {
         this.street = street;
         this.number = number;
+        this.complement = complement;
         this.neighborhood = neighborhood;
         this.city = city;
         this.state = state;
@@ -35,6 +37,14 @@ public class AddressDto {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public String getComplement() {
+        return complement;
+    }
+
+    public void setComplement(String complement) {
+        this.complement = complement;
     }
 
     public String getNeighborhood() {

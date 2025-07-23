@@ -8,6 +8,7 @@ import java.util.Set;
 
 public class ClientDto {
 
+    private Long id;
     private String name;
     private LocalDate birthDate;
     private DocumentType documentType;
@@ -20,12 +21,21 @@ public class ClientDto {
     public ClientDto() {
     }
 
-    public ClientDto(String name, LocalDate birthDate, DocumentType documentType, String documentNumber, String email) {
+    public ClientDto(Long id, String name, LocalDate birthDate, DocumentType documentType, String documentNumber, String email) {
+        this.id = id;
         this.name = name;
         this.birthDate = birthDate;
         this.documentType = documentType;
         this.documentNumber = documentNumber;
         this.email = email;
+    }
+
+    public Long getId(){
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
