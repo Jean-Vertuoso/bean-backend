@@ -10,6 +10,7 @@ public class Address implements Serializable {
 
     private String street;
     private String number;
+    private String complement;
     private String neighborhood;
     private String city;
     private String state;
@@ -18,9 +19,10 @@ public class Address implements Serializable {
     public Address() {
     }
 
-    public Address(String street, String number, String neighborhood, String city, String state, String postalCode) {
+    public Address(String street, String number, String complement, String neighborhood, String city, String state, String postalCode) {
         this.street = street;
         this.number = number;
+        this.complement = complement;
         this.neighborhood = neighborhood;
         this.city = city;
         this.state = state;
@@ -37,6 +39,14 @@ public class Address implements Serializable {
 
     public String getNumber() {
         return number;
+    }
+
+    public String getComplement() {
+        return complement;
+    }
+
+    public void setComplement(String complement) {
+        this.complement = complement;
     }
 
     public void setNumber(String number) {
