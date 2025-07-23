@@ -38,10 +38,10 @@ INSERT INTO tb_client_phones(area_code, number, client_id) VALUES ('41', '969165
 INSERT INTO tb_client_phones(area_code, number, client_id) VALUES ('48', '981695657', 2);
 INSERT INTO tb_client_phones(area_code, number, client_id) VALUES ('38', '992134343', 2);
 ------------------------------------------------------------------------------------------------------------------
-INSERT INTO tb_client_addresses(street, number, neighborhood, city, state, postal_code, client_id) VALUES ('Avenida José Antônio de Oliveira Neto', '182', 'Centro', 'Araricá', 'RS', '93880970', 1);
-INSERT INTO tb_client_addresses(street, number, neighborhood, city, state, postal_code, client_id) VALUES ('Avenida Willian Davids', 'S/N', 'Marquês dos Reis', 'Marquês dos Reis', 'PR', '86409970', 1);
-INSERT INTO tb_client_addresses(street, number, neighborhood, city, state, postal_code, client_id) VALUES ('Rua Waldi Voss', '225', 'Zona Industrial Norte', 'Joinville', 'SC', '89219680', 2);
-INSERT INTO tb_client_addresses(street, number, neighborhood, city, state, postal_code, client_id) VALUES ('Rua Um', 'S/N', 'São Francisco', 'Ouro Branco', 'MG', '36420979', 2);
+INSERT INTO tb_client_addresses(street, number, complement, neighborhood, city, state, postal_code, client_id) VALUES ('Avenida José Antônio de Oliveira Neto', '182', 'Casa', 'Centro', 'Araricá', 'RS', '93880970', 1);
+INSERT INTO tb_client_addresses(street, number, complement, neighborhood, city, state, postal_code, client_id) VALUES ('Avenida Willian Davids', 'S/N', 'Ap. 182', 'Marquês dos Reis', 'Marquês dos Reis', 'PR', '86409970', 1);
+INSERT INTO tb_client_addresses(street, number, complement, neighborhood, city, state, postal_code, client_id) VALUES ('Rua Waldi Voss', '225', 'Casa marrom', 'Zona Industrial Norte', 'Joinville', 'SC', '89219680', 2);
+INSERT INTO tb_client_addresses(street, number, complement, neighborhood, city, state, postal_code, client_id) VALUES ('Rua Um', 'S/N', 'Segundo prédio Ap. 302', 'São Francisco', 'Ouro Branco', 'MG', '36420979', 2);
 ------------------------------------------------------------------------------------------------------------------
 INSERT INTO tb_cash_session(opening_timestamp, closing_timestamp, opening_amount, closing_amount, expected_amount, notes, closed, operator_id) VALUES (TIMESTAMP WITH TIME ZONE '2025-04-14T08:00:00-03:00', TIMESTAMP WITH TIME ZONE '2025-04-14T18:00:00-03:00', 10000.00, 12238.10, 12238.10, 'Caixa fechado conforme esperado', true, 1);
 ------------------------------------------------------------------------------------------------------------------

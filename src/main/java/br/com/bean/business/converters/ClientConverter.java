@@ -2,6 +2,7 @@ package br.com.bean.business.converters;
 
 import br.com.bean.business.dto.AddressDto;
 import br.com.bean.business.dto.ClientDto;
+import br.com.bean.business.dto.ClientMinDto;
 import br.com.bean.business.dto.PhoneDto;
 import br.com.bean.infrastructure.entities.Address;
 import br.com.bean.infrastructure.entities.Client;
@@ -30,6 +31,7 @@ public class ClientConverter {
     public ClientDto entityToDto(Client entity){
         ClientDto dto = new ClientDto();
 
+        dto.setId(entity.getId());
         dto.setName(entity.getName());
         dto.setBirthDate(entity.getBirthDate());
         dto.setDocumentType(entity.getDocumentType());
@@ -39,6 +41,16 @@ public class ClientConverter {
         dto.getAddresses().addAll(entity.getAddresses().stream().map(this::entityToDto).collect(Collectors.toSet()));
 
         return dto;
+    }
+
+    public ClientMinDto entityToMinDto(Client entity){
+        ClientMinDto minDto = new ClientMinDto();
+
+        minDto.setId(entity.getId());
+        minDto.setName(entity.getName());
+        minDto.setEmail(entity.getEmail());
+
+        return minDto;
     }
 
     private Phone dtoToEntity(PhoneDto dto){
@@ -56,6 +68,7 @@ public class ClientConverter {
         entity.setPostalCode(dto.getPostalCode());
         entity.setStreet(dto.getStreet());
         entity.setNumber(dto.getNumber());
+        entity.setComplement(dto.getComplement());
         entity.setNeighborhood(dto.getNeighborhood());
         entity.setCity(dto.getCity());
         entity.setState(dto.getState());
@@ -78,6 +91,7 @@ public class ClientConverter {
         dto.setPostalCode(entity.getPostalCode());
         dto.setStreet(entity.getStreet());
         dto.setNumber(entity.getNumber());
+        dto.setComplement(entity.getComplement());
         dto.setNeighborhood(entity.getNeighborhood());
         dto.setCity(entity.getCity());
         dto.setState(entity.getState());
