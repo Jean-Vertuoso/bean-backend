@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/clients")
 public class ClientController {
 
-    private ClientService service;
+    private final ClientService service;
 
     public ClientController(ClientService service) {
         this.service = service;
@@ -21,6 +21,11 @@ public class ClientController {
     @GetMapping
     public ResponseEntity<List<ClientDto>> findAll(){
         return ResponseEntity.ok(service.findAll());
+    }
+
+    @GetMapping(params = "name")
+    public ResponseEntity<List<ClientDto>> findByName(@RequestParam String name) {
+        return ResponseEntity.ok(service.findByName(name));
     }
 
     @PostMapping

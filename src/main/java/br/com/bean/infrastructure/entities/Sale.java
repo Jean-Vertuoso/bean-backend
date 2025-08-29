@@ -33,8 +33,8 @@ public class Sale implements Serializable {
     private CashSession cashSession;
 
     @ManyToOne
-    @JoinColumn(name = "operator_id")
-    private User operator;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @OneToMany(mappedBy = "id.sale")
     private Set<SaleItem> items = new HashSet<>();
@@ -42,7 +42,7 @@ public class Sale implements Serializable {
     public Sale() {
     }
 
-    public Sale(Long id, Instant saleTimestamp, BigDecimal totalDiscount, BigDecimal totalValue, PaymentMethod paymentMethod, Client client, CashSession cashSession, User operator) {
+    public Sale(Long id, Instant saleTimestamp, BigDecimal totalDiscount, BigDecimal totalValue, PaymentMethod paymentMethod, Client client, CashSession cashSession, User user) {
         this.id = id;
         this.saleTimestamp = saleTimestamp;
         this.totalDiscount = totalDiscount;
@@ -50,7 +50,7 @@ public class Sale implements Serializable {
         this.paymentMethod = paymentMethod;
         this.client = client;
         this.cashSession = cashSession;
-        this.operator = operator;
+        this.user = user;
     }
 
     public Long getId() {
@@ -109,12 +109,12 @@ public class Sale implements Serializable {
         this.cashSession = cashSession;
     }
 
-    public User getOperator() {
-        return operator;
+    public User getUser() {
+        return user;
     }
 
-    public void setOperator(User operator) {
-        this.operator = operator;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Set<SaleItem> getItems() {
