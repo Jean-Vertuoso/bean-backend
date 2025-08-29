@@ -30,6 +30,11 @@ public class ProductService {
         return repository.findAll().stream().map(converter::entityToMinDto).toList();
     }
 
+    @Transactional(readOnly = true)
+    public List<ProductDto> findByNameOrBarCode(String nameOrBarCode) {
+        return repository.findByNameContainingIgnoreCaseOrBarCode(nameOrBarCode).stream().map(converter::entityToDto).toList();
+    }
+
     @Transactional
     public ProductDto saveProduct(ProductDto dto){
         Set<Category> categories = categoryService.findSetById(dto.getCategoryIds());

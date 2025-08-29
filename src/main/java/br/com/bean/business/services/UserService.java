@@ -31,6 +31,15 @@ public class UserService{
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Transactional(readOnly = true)
+    public User getReferenceById(Long id){
+        try{
+            return repository.getReferenceById(id);
+        }catch(Exception ex){
+            throw new ResourceNotFoundException("User not found");
+        }
+    }
+
     @Transactional
     public UserDto saveUser(UserDto dto){
         emailExists(dto.getEmail());

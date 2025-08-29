@@ -18,7 +18,7 @@ public class User implements Serializable, UserDetails {
     private String email;
     private String password;
 
-    @OneToMany(mappedBy = "operator")
+    @OneToMany(mappedBy = "user")
     private Set<Sale> sales = new HashSet<>();
 
     @ManyToMany
