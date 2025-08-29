@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS tb_client;
 DROP TABLE IF EXISTS tb_cash_session;
 DROP TABLE IF EXISTS tb_sale_item;
 DROP TABLE IF EXISTS tb_sale;
+DROP TABLE IF EXISTS tb_system_config;
 
 CREATE TABLE tb_category (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -104,9 +105,9 @@ CREATE TABLE tb_cash_session (
     closing_amount DECIMAL(15, 2),
     expected_amount DECIMAL(15, 2),
     notes VARCHAR(255),
-    closed BOOLEAN NOT NULL,
-    operator_id BIGINT NOT NULL,
-    CONSTRAINT fk_cash_session_operator FOREIGN KEY (operator_id) REFERENCES tb_user(id)
+    status VARCHAR(50) NOT NULL,
+    user_id BIGINT NOT NULL,
+    CONSTRAINT fk_cash_session_user FOREIGN KEY (user_id) REFERENCES tb_user(id)
 );
 
 CREATE TABLE tb_sale (
@@ -116,10 +117,10 @@ CREATE TABLE tb_sale (
     total_discount DECIMAL(15, 2),
     payment_method INT NOT NULL,
     client_id BIGINT NOT NULL,
-    operator_id BIGINT NOT NULL,
+    user_id BIGINT NOT NULL,
     cash_session_id BIGINT NOT NULL,
     CONSTRAINT fk_sale_client FOREIGN KEY (client_id) REFERENCES tb_client(id),
-    CONSTRAINT fk_sale_operator FOREIGN KEY (operator_id) REFERENCES tb_user(id),
+    CONSTRAINT fk_sale_user FOREIGN KEY (user_id) REFERENCES tb_user(id),
     CONSTRAINT fk_sale_cash_session FOREIGN KEY (cash_session_id) REFERENCES tb_cash_session(id)
 );
 
@@ -132,4 +133,11 @@ CREATE TABLE tb_sale_item (
     discount DECIMAL(15, 2),
     CONSTRAINT fk_sale_item_sale FOREIGN KEY (sale_id) REFERENCES tb_sale(id),
     CONSTRAINT fk_sale_item_product FOREIGN KEY (product_id) REFERENCES tb_product(id)
+);
+
+CREATE TABLE tb_config (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    config_key VARCHAR(255),
+    config_value VARCHAR(255),
+    updated_at TIMESTAMP WITH TIME ZONE
 );

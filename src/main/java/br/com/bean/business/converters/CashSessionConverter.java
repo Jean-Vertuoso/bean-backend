@@ -4,20 +4,24 @@ import br.com.bean.business.dto.CashSessionDto;
 import br.com.bean.infrastructure.entities.CashSession;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 @Component
 public class CashSessionConverter {
 
-    public CashSession dtoToEntity(CashSessionDto dto){
-        CashSession entity = new CashSession();
+    public CashSessionDto entityToDto(CashSession entity){
+        CashSessionDto dto = new CashSessionDto();
 
-        entity.setOpeningTimestamp(dto.getOpeningTimestamp());
-        entity.setClosingTimestamp(dto.getClosingTimestamp());
-        entity.setOpeningAmount(dto.getOpeningAmount());
-        entity.setClosingAmount(dto.getClosingAmount());
-        entity.setExpectedAmount(dto.getExpectedAmount());
-        entity.setNotes(dto.getNotes());
-        entity.setClosed(dto.getClosed());
+        dto.setId(entity.getId());
+        dto.setOpeningTimestamp(entity.getOpeningTimestamp());
+        dto.setClosingTimestamp(entity.getClosingTimestamp());
+        dto.setOpeningAmount(entity.getOpeningAmount());
+        dto.setClosingAmount(entity.getClosingAmount() != null ? entity.getClosingAmount() : BigDecimal.ZERO);
+        dto.setExpectedAmount(entity.getExpectedAmount()  != null ? entity.getExpectedAmount() : BigDecimal.ZERO);
+        dto.setNotes(entity.getNotes());
+        dto.setStatus(entity.getStatus());
+        dto.setUserId(entity.getUser().getId());
 
-        return entity;
+        return dto;
     }
 }

@@ -24,6 +24,11 @@ public class ProductController {
         return ResponseEntity.ok(service.findAll());
     }
 
+    @GetMapping(params = "nameOrBarCode")
+    public ResponseEntity<List<ProductDto>> findByNameOrBarCode(@RequestParam String nameOrBarCode) {
+        return ResponseEntity.ok(service.findByNameOrBarCode(nameOrBarCode));
+    }
+
     @PostMapping
     public ResponseEntity<ProductDto> saveProduct(@RequestBody ProductDto productDto){
         return ResponseEntity.ok(service.saveProduct(productDto));

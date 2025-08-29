@@ -1,5 +1,6 @@
 package br.com.bean.infrastructure.entities;
 
+import br.com.bean.business.enums.CashSessionStatus;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -26,11 +27,11 @@ public class CashSession implements Serializable {
     private String notes;
 
     @Column(nullable = false)
-    private Boolean closed;
+    private CashSessionStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "operator_id")
-    private User operator;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @OneToMany(mappedBy = "cashSession")
     private Set<Sale> sales = new HashSet<>();
@@ -38,7 +39,7 @@ public class CashSession implements Serializable {
     public CashSession() {
     }
 
-    public CashSession(Long id, Instant openingTimestamp, Instant closingTimestamp, BigDecimal openingAmount, BigDecimal closingAmount, BigDecimal expectedAmount, String notes, Boolean closed, User operator) {
+    public CashSession(Long id, Instant openingTimestamp, Instant closingTimestamp, BigDecimal openingAmount, BigDecimal closingAmount, BigDecimal expectedAmount, String notes, CashSessionStatus status, User user) {
         this.id = id;
         this.openingTimestamp = openingTimestamp;
         this.closingTimestamp = closingTimestamp;
@@ -46,8 +47,8 @@ public class CashSession implements Serializable {
         this.closingAmount = closingAmount;
         this.expectedAmount = expectedAmount;
         this.notes = notes;
-        this.closed = closed;
-        this.operator = operator;
+        this.status = status;
+        this.user = user;
     }
 
     public Long getId() {
@@ -106,20 +107,20 @@ public class CashSession implements Serializable {
         this.notes = notes;
     }
 
-    public Boolean getClosed() {
-        return closed;
+    public CashSessionStatus getStatus() {
+        return status;
     }
 
-    public void setClosed(Boolean closed) {
-        this.closed = closed;
+    public void setStatus(CashSessionStatus status) {
+        this.status = status;
     }
 
-    public User getOperator() {
-        return operator;
+    public User getUser() {
+        return user;
     }
 
-    public void setOperator(User operator) {
-        this.operator = operator;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Set<Sale> getOrders() {

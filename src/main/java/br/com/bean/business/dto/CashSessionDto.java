@@ -1,5 +1,7 @@
 package br.com.bean.business.dto;
 
+import br.com.bean.business.enums.CashSessionStatus;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 
@@ -12,13 +14,13 @@ public class CashSessionDto {
     private BigDecimal closingAmount;
     private BigDecimal expectedAmount;
     private String notes;
-    private Boolean closed;
-    private UserDto operator;
+    private CashSessionStatus status;
+    private Long userId;
 
     public CashSessionDto() {
     }
 
-    public CashSessionDto(Long id, Instant openingTimestamp, Instant closingTimestamp, BigDecimal openingAmount, BigDecimal closingAmount, BigDecimal expectedAmount, String notes, Boolean closed, UserDto operator) {
+    public CashSessionDto(Long id, Instant openingTimestamp, Instant closingTimestamp, BigDecimal openingAmount, BigDecimal closingAmount, BigDecimal expectedAmount, String notes, CashSessionStatus status, Long userId) {
         this.id = id;
         this.openingTimestamp = openingTimestamp;
         this.closingTimestamp = closingTimestamp;
@@ -26,8 +28,8 @@ public class CashSessionDto {
         this.closingAmount = closingAmount;
         this.expectedAmount = expectedAmount;
         this.notes = notes;
-        this.closed = closed;
-        this.operator = operator;
+        this.status = status;
+        this.userId = userId;
     }
 
     public Long getId() {
@@ -86,19 +88,19 @@ public class CashSessionDto {
         this.notes = notes;
     }
 
-    public Boolean getClosed() {
-        return closed;
+    public CashSessionStatus getStatus() {
+        return status;
     }
 
-    public void setClosed(Boolean closed) {
-        this.closed = closed;
+    public void setStatus(CashSessionStatus status) {
+        this.status = status;
     }
 
-    public UserDto getOperator() {
-        return operator;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setOperator(UserDto operator) {
-        this.operator = operator;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

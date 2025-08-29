@@ -43,11 +43,13 @@ INSERT INTO tb_client_addresses(street, number, complement, neighborhood, city, 
 INSERT INTO tb_client_addresses(street, number, complement, neighborhood, city, state, postal_code, client_id) VALUES ('Rua Waldi Voss', '225', 'Casa marrom', 'Zona Industrial Norte', 'Joinville', 'SC', '89219680', 2);
 INSERT INTO tb_client_addresses(street, number, complement, neighborhood, city, state, postal_code, client_id) VALUES ('Rua Um', 'S/N', 'Segundo prédio Ap. 302', 'São Francisco', 'Ouro Branco', 'MG', '36420979', 2);
 ------------------------------------------------------------------------------------------------------------------
-INSERT INTO tb_cash_session(opening_timestamp, closing_timestamp, opening_amount, closing_amount, expected_amount, notes, closed, operator_id) VALUES (TIMESTAMP WITH TIME ZONE '2025-04-14T08:00:00-03:00', TIMESTAMP WITH TIME ZONE '2025-04-14T18:00:00-03:00', 10000.00, 12238.10, 12238.10, 'Caixa fechado conforme esperado', true, 1);
+INSERT INTO tb_cash_session(opening_timestamp, closing_timestamp, opening_amount, closing_amount, expected_amount, notes, status, user_id) VALUES (TIMESTAMP WITH TIME ZONE '2025-04-14T08:00:00-03:00', TIMESTAMP WITH TIME ZONE '2025-04-14T18:00:00-03:00', 200.00, 12238.10, 12438.10, 'Caixa fechado conforme esperado', 1, 1);
 ------------------------------------------------------------------------------------------------------------------
-INSERT INTO tb_sale(sale_timestamp, total_value, total_discount, payment_method, client_id, operator_id, cash_session_id) VALUES (TIMESTAMP WITH TIME ZONE '2025-04-14T10:34:22-03:00', 908.34, 0.0, 3, 1, 1, 1);
-INSERT INTO tb_sale(sale_timestamp, total_value, total_discount, payment_method, client_id, operator_id, cash_session_id) VALUES (TIMESTAMP WITH TIME ZONE '2025-04-14T14:22:22-03:00', 2108.30, 105.42, 6, 2, 1, 1);
+INSERT INTO tb_sale(sale_timestamp, total_value, total_discount, payment_method, client_id, user_id, cash_session_id) VALUES (TIMESTAMP WITH TIME ZONE '2025-04-14T10:34:22-03:00', 908.34, 0.0, 3, 1, 1, 1);
+INSERT INTO tb_sale(sale_timestamp, total_value, total_discount, payment_method, client_id, user_id, cash_session_id) VALUES (TIMESTAMP WITH TIME ZONE '2025-04-14T14:22:22-03:00', 2108.30, 105.42, 6, 2, 1, 1);
 ------------------------------------------------------------------------------------------------------------------
 INSERT INTO tb_sale_item(sale_id, product_id, quantity, unit_price, discount) VALUES (1, 3, 2, 64.90, 0);
 INSERT INTO tb_sale_item(sale_id, product_id, quantity, unit_price, discount) VALUES (2, 1, 4, 299.99, 0);
 INSERT INTO tb_sale_item(sale_id, product_id, quantity, unit_price, discount) VALUES (2, 2, 3, 302.78, 0);
+------------------------------------------------------------------------------------------------------------------
+INSERT INTO tb_config(config_key, config_value, updated_at) VALUES ('CASH_DEFAULT_OPENING_AMOUNT', 200.00, TIMESTAMP WITH TIME ZONE '2025-08-24T08:02:17-03:00');

@@ -26,6 +26,11 @@ public class ClientService {
         return repository.findAll().stream().map(converter::entityToDto).toList();
     }
 
+    @Transactional(readOnly = true)
+    public List<ClientDto> findByName(String name) {
+        return repository.findByNameContainingIgnoreCase(name).stream().map(converter::entityToDto).toList();
+    }
+
     @Transactional
     public ClientDto saveClient(ClientDto dto){
         Client entity = converter.dtoToEntity(dto);
