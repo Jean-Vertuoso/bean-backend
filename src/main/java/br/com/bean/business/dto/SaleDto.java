@@ -4,6 +4,8 @@ import br.com.bean.business.enums.PaymentMethod;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SaleDto {
 
@@ -12,22 +14,23 @@ public class SaleDto {
     private BigDecimal totalDiscount;
     private BigDecimal totalValue;
     private PaymentMethod paymentMethod;
-    private ClientDto client;
-    private CashSessionDto cashSession;
-    private UserDto operator;
+    private Long clientId;
+    private Long cashSessionId;
+    private Long userId;
+    private List<SaleItemDto> items = new ArrayList<>();
 
     public SaleDto() {
     }
 
-    public SaleDto(Long id, Instant saleTimestamp, BigDecimal totalDiscount, BigDecimal totalValue, PaymentMethod paymentMethod, ClientDto client, CashSessionDto cashSession, UserDto operator) {
+    public SaleDto(Long id, Instant saleTimestamp, BigDecimal totalDiscount, BigDecimal totalValue, PaymentMethod paymentMethod, Long clientId, Long cashSessionId, Long userId) {
         this.id = id;
         this.saleTimestamp = saleTimestamp;
         this.totalDiscount = totalDiscount;
         this.totalValue = totalValue;
         this.paymentMethod = paymentMethod;
-        this.client = client;
-        this.cashSession = cashSession;
-        this.operator = operator;
+        this.clientId = clientId;
+        this.cashSessionId = cashSessionId;
+        this.userId = userId;
     }
 
     public Long getId() {
@@ -70,27 +73,31 @@ public class SaleDto {
         this.paymentMethod = paymentMethod;
     }
 
-    public ClientDto getClient() {
-        return client;
+    public Long getClientId() {
+        return clientId;
     }
 
-    public void setClient(ClientDto client) {
-        this.client = client;
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
     }
 
-    public CashSessionDto getCashSession() {
-        return cashSession;
+    public Long getCashSessionId() {
+        return cashSessionId;
     }
 
-    public void setCashSession(CashSessionDto cashSession) {
-        this.cashSession = cashSession;
+    public void setCashSessionId(Long cashSessionId) {
+        this.cashSessionId = cashSessionId;
     }
 
-    public UserDto getOperator() {
-        return operator;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setOperator(UserDto operator) {
-        this.operator = operator;
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public List<SaleItemDto> getItems() {
+        return items;
     }
 }

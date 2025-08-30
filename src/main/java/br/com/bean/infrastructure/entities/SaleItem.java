@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 @Entity
@@ -16,21 +17,23 @@ public class SaleItem {
     private SaleItemPK id = new SaleItemPK();
 
     private Double quantity;
-    private BigDecimal unitPrice;
+    private BigDecimal price;
     private BigDecimal discount;
+    private BigDecimal subtotal;
 
     public SaleItem() {
     }
 
-    public SaleItem(Sale sale, Product product, Double quantity, BigDecimal unitPrice, BigDecimal discount) {
+    public SaleItem(Sale sale, Product product, Double quantity, BigDecimal price, BigDecimal discount) {
         id.setSale(sale);
         id.setProduct(product);
         this.quantity = quantity;
-        this.unitPrice = unitPrice;
+        this.price = price;
         this.discount = discount;
+        this.calcSubtotal();
     }
 
-    private Sale getOrder(){
+    public Sale getOrder(){
         return id.getSale();
     }
 
@@ -38,7 +41,7 @@ public class SaleItem {
         id.setSale(sale);
     }
 
-    private Product getProduct(){
+    public Product getProduct(){
         return id.getProduct();
     }
 
@@ -54,12 +57,12 @@ public class SaleItem {
         this.quantity = quantity;
     }
 
-    public BigDecimal getUnitPrice() {
-        return unitPrice;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setUnitPrice(BigDecimal unitPrice) {
-        this.unitPrice = unitPrice;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public BigDecimal getDiscount() {
@@ -70,8 +73,14 @@ public class SaleItem {
         this.discount = discount;
     }
 
-    public BigDecimal getSubTotal(){
-        return unitPrice.multiply(BigDecimal.valueOf(quantity));
+    public BigDecimal getSubtotal() {
+        return subtotal;
+    }
+
+    public void calcSubtotal() {
+        subtotal = price.multiply(BigDecimal.valueOf(quantity))
+                .subtract(discount)
+                .setScale(2, RoundingMode.HALF_UP);
     }
 
     @Override
