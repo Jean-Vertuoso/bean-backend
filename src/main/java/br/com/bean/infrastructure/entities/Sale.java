@@ -5,10 +5,11 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Instant;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "tb_sale")
@@ -36,8 +37,8 @@ public class Sale implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "id.sale")
-    private Set<SaleItem> items = new HashSet<>();
+    @OneToMany(mappedBy = "id.sale", cascade = CascadeType.ALL)
+    private List<SaleItem> items = new ArrayList<>();
 
     public Sale() {
     }
@@ -81,8 +82,18 @@ public class Sale implements Serializable {
         return totalValue;
     }
 
-    public void setTotalValue(BigDecimal totalValue) {
-        this.totalValue = totalValue;
+    public BigDecimal calcTotalValue() {
+        return items.stream()
+                .map(SaleItem::getSubtotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    @PrePersist
+    @PreUpdate
+    public void updateTotalValue() {
+        this.totalValue = calcTotalValue()
+                .subtract(totalDiscount)
+                .setScale(2, RoundingMode.HALF_UP);
     }
 
     public PaymentMethod getPaymentMethod() {
@@ -101,11 +112,11 @@ public class Sale implements Serializable {
         this.client = client;
     }
 
-    public CashSession getCashRegisterSession() {
+    public CashSession getCashSession() {
         return cashSession;
     }
 
-    public void setCashRegisterSession(CashSession cashSession) {
+    public void setCashSession(CashSession cashSession) {
         this.cashSession = cashSession;
     }
 
@@ -117,7 +128,7 @@ public class Sale implements Serializable {
         this.user = user;
     }
 
-    public Set<SaleItem> getItems() {
+    public List<SaleItem> getItems() {
         return items;
     }
 

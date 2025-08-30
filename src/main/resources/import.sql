@@ -48,8 +48,8 @@ INSERT INTO tb_cash_session(opening_timestamp, closing_timestamp, opening_amount
 INSERT INTO tb_sale(sale_timestamp, total_value, total_discount, payment_method, client_id, user_id, cash_session_id) VALUES (TIMESTAMP WITH TIME ZONE '2025-04-14T10:34:22-03:00', 908.34, 0.0, 3, 1, 1, 1);
 INSERT INTO tb_sale(sale_timestamp, total_value, total_discount, payment_method, client_id, user_id, cash_session_id) VALUES (TIMESTAMP WITH TIME ZONE '2025-04-14T14:22:22-03:00', 2108.30, 105.42, 6, 2, 1, 1);
 ------------------------------------------------------------------------------------------------------------------
-INSERT INTO tb_sale_item(sale_id, product_id, quantity, unit_price, discount) VALUES (1, 3, 2, 64.90, 0);
-INSERT INTO tb_sale_item(sale_id, product_id, quantity, unit_price, discount) VALUES (2, 1, 4, 299.99, 0);
-INSERT INTO tb_sale_item(sale_id, product_id, quantity, unit_price, discount) VALUES (2, 2, 3, 302.78, 0);
+INSERT INTO tb_sale_item(sale_id, product_id, quantity, price, discount) VALUES (1, 3, 2, 64.90, 0);
+INSERT INTO tb_sale_item(sale_id, product_id, quantity, price, discount) VALUES (2, 1, 4, 299.99, 0);
+INSERT INTO tb_sale_item(sale_id, product_id, quantity, price, discount) VALUES (2, 2, 3, 302.78, 0);
 ------------------------------------------------------------------------------------------------------------------
 INSERT INTO tb_config(config_key, config_value, updated_at) VALUES ('CASH_DEFAULT_OPENING_AMOUNT', 200.00, TIMESTAMP WITH TIME ZONE '2025-08-24T08:02:17-03:00');

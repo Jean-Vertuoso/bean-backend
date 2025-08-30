@@ -7,7 +7,9 @@ import br.com.bean.infrastructure.entities.Role;
 import br.com.bean.infrastructure.entities.User;
 import br.com.bean.infrastructure.exceptions.ConflictException;
 import br.com.bean.infrastructure.exceptions.ResourceNotFoundException;
+import br.com.bean.infrastructure.exceptions.IllegalArgumentException;
 import br.com.bean.infrastructure.repositories.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,21 +25,14 @@ public class UserService{
     private final UserConverter converter;
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
+    private EntityFinderService finder;
 
-    public UserService(UserRepository repository, UserConverter converter, RoleService roleService, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository repository, UserConverter converter, RoleService roleService, PasswordEncoder passwordEncoder, EntityFinderService finder) {
         this.repository = repository;
         this.converter = converter;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
-    }
-
-    @Transactional(readOnly = true)
-    public User getReferenceById(Long id){
-        try{
-            return repository.getReferenceById(id);
-        }catch(Exception ex){
-            throw new ResourceNotFoundException("User not found");
-        }
+        this.finder = finder;
     }
 
     @Transactional
@@ -52,19 +47,8 @@ public class UserService{
         return converter.entityToDto(repository.save(entity));
     }
 
-    public void emailExists(String email){
-        try {
-            boolean exists = checkIfEmailExists(email);
-            if(exists){
-                throw new ConflictException("Email already exists " + email);
-            }
-        }catch(ConflictException e){
-            throw new ConflictException("Email already exists ", e.getCause());
-        }
-    }
-
-    public boolean checkIfEmailExists(String email){
-        return repository.existsByEmail(email);
+    public User getReferenceByIdOrThrow(Long id){
+        return finder.getReferenceByIdOrThrow(repository, id, "User");
     }
 
     @Transactional(readOnly = true)
@@ -81,6 +65,21 @@ public class UserService{
         );
 
         return userLogged;
+    }
+
+    public void emailExists(String email){
+        try {
+            boolean exists = checkIfEmailExists(email);
+            if(exists){
+                throw new ConflictException("Email already exists " + email);
+            }
+        }catch(ConflictException e){
+            throw new ConflictException("Email already exists ", e.getCause());
+        }
+    }
+
+    public boolean checkIfEmailExists(String email){
+        return repository.existsByEmail(email);
     }
 
     @Transactional(readOnly = true)
