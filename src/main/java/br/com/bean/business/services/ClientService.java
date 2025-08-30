@@ -2,9 +2,11 @@ package br.com.bean.business.services;
 
 import br.com.bean.business.converters.ClientConverter;
 import br.com.bean.business.dto.ClientDto;
-import br.com.bean.business.dto.ClientMinDto;
 import br.com.bean.infrastructure.entities.Client;
+import br.com.bean.infrastructure.exceptions.IllegalArgumentException;
+import br.com.bean.infrastructure.exceptions.ResourceNotFoundException;
 import br.com.bean.infrastructure.repositories.ClientRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,10 +17,18 @@ public class ClientService {
 
     private final ClientRepository repository;
     private final ClientConverter converter;
+    private final EntityFinderService finderService;
 
-    public ClientService(ClientRepository repository, ClientConverter converter) {
+    public ClientService(ClientRepository repository, ClientConverter converter, EntityFinderService finderService) {
         this.repository = repository;
         this.converter = converter;
+        this.finderService = finderService;
+    }
+
+    @Transactional
+    public ClientDto saveClient(ClientDto dto){
+        Client entity = converter.dtoToEntity(dto);
+        return converter.entityToDto(repository.save(entity));
     }
 
     @Transactional(readOnly = true)
@@ -31,9 +41,7 @@ public class ClientService {
         return repository.findByNameContainingIgnoreCase(name).stream().map(converter::entityToDto).toList();
     }
 
-    @Transactional
-    public ClientDto saveClient(ClientDto dto){
-        Client entity = converter.dtoToEntity(dto);
-        return converter.entityToDto(repository.save(entity));
+    public Client getReferenceByIdOrThrow(Long id){
+        return finderService.getReferenceByIdOrThrow(repository, id, "Client");
     }
 }

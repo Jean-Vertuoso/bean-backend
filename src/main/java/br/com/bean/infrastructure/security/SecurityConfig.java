@@ -50,6 +50,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/users/check").permitAll()
                         .requestMatchers("/products/**").authenticated()
                         .requestMatchers("/clients/**").authenticated()
+                        .requestMatchers("/sales/**").authenticated()
                         .requestMatchers("/logout").authenticated()
                         .anyRequest().authenticated()
                 )
