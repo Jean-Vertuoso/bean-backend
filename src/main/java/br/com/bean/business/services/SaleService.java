@@ -3,6 +3,7 @@ package br.com.bean.business.services;
 import br.com.bean.business.converters.SaleConverter;
 import br.com.bean.business.dto.SaleDto;
 import br.com.bean.business.dto.SaleItemDto;
+import br.com.bean.business.enums.PaymentMethod;
 import br.com.bean.infrastructure.entities.*;
 import br.com.bean.infrastructure.exceptions.ResourceNotFoundException;
 import br.com.bean.infrastructure.repositories.ProductRepository;
@@ -39,18 +40,22 @@ public class SaleService {
     }
 
     @Transactional
-    public SaleDto saveSale(SaleDto dto) {
-        Client client = clientService.getReferenceByIdOrThrow(dto.getClientId());
-        CashSession cashSession = cashSessionService.getReferenceByIdOrThrow(dto.getCashSessionId());
+    public SaleDto saveSale(SaleDto dtoRequest) {
+        Client client = clientService.getReferenceByIdOrThrow(dtoRequest.getClientId());
+        CashSession cashSession = cashSessionService.getReferenceByIdOrThrow(dtoRequest.getCashSessionId());
         User user = userService.getReferenceByIdOrThrow(userService.getMe().getId());
-        Sale sale = converter.dtoToEntity(dto, client, cashSession, user);
+        Sale sale = converter.dtoToEntity(dtoRequest, client, cashSession, user);
 
-        for(SaleItemDto itemDto : dto.getItems()) {
+        for(SaleItemDto itemDto : dtoRequest.getItems()) {
             Product product = productRepository.getReferenceById(itemDto.getProductId());
             SaleItem item = new SaleItem(sale, product, itemDto.getQuantity(), product.getPrice(), itemDto.getDiscount());
             sale.getItems().add(item);
         }
 
-        return converter.entityToDto(repository.save(sale));
+        SaleDto dtoResponse = converter.entityToDto(repository.save(sale));
+
+        cashSessionService.updateExpectedAmount(cashSession);
+
+        return dtoResponse;
     }
 }

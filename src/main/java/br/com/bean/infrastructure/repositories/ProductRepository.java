@@ -10,7 +10,8 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    @Query(value = """
+    @Query(value =
+            """
             SELECT * FROM tb_product WHERE name ILIKE CONCAT('%', :nameOrBarCode, '%') OR bar_code ILIKE CONCAT('%', :nameOrBarCode, '%')
             """, nativeQuery = true)
     List<Product> findByNameContainingIgnoreCaseOrBarCode(String nameOrBarCode);

@@ -1,10 +1,12 @@
 package br.com.bean.infrastructure.entities;
 
 import br.com.bean.business.enums.CashSessionStatus;
+import br.com.bean.business.enums.PaymentMethod;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Objects;
@@ -22,10 +24,12 @@ public class CashSession implements Serializable {
     private BigDecimal openingAmount;
     private BigDecimal closingAmount;
     private BigDecimal expectedAmount;
+    private BigDecimal totalSales;
 
     @Column(columnDefinition = "TEXT")
     private String notes;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private CashSessionStatus status;
 
@@ -33,19 +37,20 @@ public class CashSession implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "cashSession")
+    @OneToMany(mappedBy = "cashSession", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Sale> sales = new HashSet<>();
 
     public CashSession() {
     }
 
-    public CashSession(Long id, Instant openingTimestamp, Instant closingTimestamp, BigDecimal openingAmount, BigDecimal closingAmount, BigDecimal expectedAmount, String notes, CashSessionStatus status, User user) {
+    public CashSession(Long id, Instant openingTimestamp, Instant closingTimestamp, BigDecimal openingAmount, BigDecimal closingAmount, BigDecimal expectedAmount, BigDecimal totalSales, String notes, CashSessionStatus status, User user) {
         this.id = id;
         this.openingTimestamp = openingTimestamp;
         this.closingTimestamp = closingTimestamp;
         this.openingAmount = openingAmount;
         this.closingAmount = closingAmount;
         this.expectedAmount = expectedAmount;
+        this.totalSales = totalSales;
         this.notes = notes;
         this.status = status;
         this.user = user;
@@ -95,8 +100,37 @@ public class CashSession implements Serializable {
         return expectedAmount;
     }
 
-    public void setExpectedAmount(BigDecimal expectedAmount) {
-        this.expectedAmount = expectedAmount;
+    public BigDecimal getTotalSales() {
+        return totalSales;
+    }
+
+    public BigDecimal calcExpectedAmount() {
+        BigDecimal sum = BigDecimal.ZERO;
+        for (Sale sale : sales) {
+            if(sale.getPaymentMethod() == PaymentMethod.CASH) {
+                sum = sum.add(sale.getTotalValue());
+            }
+        }
+        return sum;
+    }
+
+    public BigDecimal calcTotalSales() {
+        BigDecimal sum = BigDecimal.ZERO;
+        for (Sale sale : sales) {
+            sum = sum.add(sale.getTotalValue());
+        }
+        return sum;
+    }
+
+    @PrePersist
+    @PreUpdate
+    public void updateExpectedAmountAndTotalSales() {
+        this.expectedAmount = calcExpectedAmount()
+                .add(openingAmount)
+                .setScale(2, RoundingMode.HALF_UP);
+
+        this.totalSales = calcTotalSales()
+                .setScale(2, RoundingMode.HALF_UP);
     }
 
     public String getNotes() {
@@ -123,7 +157,7 @@ public class CashSession implements Serializable {
         this.user = user;
     }
 
-    public Set<Sale> getOrders() {
+    public Set<Sale> getSales() {
         return sales;
     }
 

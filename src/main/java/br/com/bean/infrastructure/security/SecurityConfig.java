@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.servlet.DispatcherServlet;
 
 @Configuration
 @EnableWebSecurity
@@ -29,10 +30,12 @@ public class SecurityConfig {
 
     private final JwtUtil jwtUtil;
     private final UserDetailsService userDetailsService;
+    private final DispatcherServlet dispatcherServlet;
 
-    public SecurityConfig(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
+    public SecurityConfig(JwtUtil jwtUtil, UserDetailsService userDetailsService, DispatcherServlet dispatcherServlet) {
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;
+        this.dispatcherServlet = dispatcherServlet;
     }
 
     @Bean
@@ -49,10 +52,17 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/users/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/users/check").permitAll()
                         .requestMatchers("/products/**").authenticated()
+                        .requestMatchers("/cashSessions/**").authenticated()
+                        .requestMatchers("/configs/**").authenticated()
+                        .requestMatchers("/users/**").authenticated()
                         .requestMatchers("/clients/**").authenticated()
                         .requestMatchers("/sales/**").authenticated()
                         .requestMatchers("/logout").authenticated()
                         .anyRequest().authenticated()
+                )
+                .exceptionHandling(exceptions -> exceptions
+                        .authenticationEntryPoint(new MyAuthenticationEntryPoint(endpointChecker()))
+                        .accessDeniedHandler(new MyAccessDeniedHandler(endpointChecker()))
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -70,5 +80,10 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
+    public HttpRequestEndpointChecker endpointChecker() {
+        return new HttpRequestEndpointChecker(dispatcherServlet);
     }
 }

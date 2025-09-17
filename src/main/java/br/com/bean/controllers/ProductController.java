@@ -3,10 +3,11 @@ package br.com.bean.controllers;
 import br.com.bean.business.dto.ProductDto;
 import br.com.bean.business.dto.ProductMinDto;
 import br.com.bean.business.services.ProductService;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -30,7 +31,10 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDto> saveProduct(@RequestBody ProductDto productDto){
-        return ResponseEntity.ok(service.saveProduct(productDto));
+    public ResponseEntity<ProductDto> saveProduct(@RequestBody ProductDto dto){
+        dto = service.saveProduct(dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).body(dto);
     }
 }
