@@ -1,11 +1,12 @@
 package br.com.bean.controllers;
 
 import br.com.bean.business.dto.ClientDto;
-import br.com.bean.business.dto.ClientMinDto;
 import br.com.bean.business.services.ClientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -30,6 +31,9 @@ public class ClientController {
 
     @PostMapping
     public ResponseEntity<ClientDto> saveClient(@RequestBody ClientDto dto){
-        return ResponseEntity.ok(service.saveClient(dto));
+        dto = service.saveClient(dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).body(dto);
     }
 }

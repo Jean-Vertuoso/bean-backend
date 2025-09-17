@@ -23,6 +23,8 @@ public class SaleConverter {
 
         entity.setSaleTimestamp(Instant.now());
         entity.setTotalDiscount(dto.getTotalDiscount());
+        entity.setAmountReceived(dto.getAmountReceived());
+        entity.setChange(dto.getChange());
         entity.setPaymentMethod(dto.getPaymentMethod());
         entity.setClient(client);
         entity.setCashSession(cashSession);
@@ -38,6 +40,8 @@ public class SaleConverter {
         dto.setSaleTimestamp(entity.getSaleTimestamp());
         dto.setTotalDiscount(entity.getTotalDiscount());
         dto.setTotalValue(entity.getTotalValue());
+        dto.setAmountReceived(entity.getAmountReceived());
+        dto.setChange(entity.getChange());
         dto.setPaymentMethod(entity.getPaymentMethod());
         dto.setClientId(entity.getClient().getId());
         dto.setCashSessionId(entity.getCashSession().getId());
