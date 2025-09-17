@@ -30,6 +30,7 @@ public class ProductConverter {
     public ProductDto entityToDto(Product entity) {
         ProductDto dto = new ProductDto();
 
+        dto.setId(entity.getId());
         dto.setName(entity.getName());
         dto.setBrand(entity.getBrand());
         dto.setPrice(entity.getPrice());
@@ -44,6 +45,7 @@ public class ProductConverter {
     public ProductMinDto entityToMinDto(Product entity){
         ProductMinDto minDto = new ProductMinDto();
 
+        minDto.setId(entity.getId());
         minDto.setBrand(entity.getBrand());
         minDto.setName(entity.getName());
         minDto.setPrice(entity.getPrice());

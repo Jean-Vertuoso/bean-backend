@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 public class ProductMinDto {
 
+    private Long id;
     private String brand;
     private String name;
     private BigDecimal price;
@@ -12,11 +13,20 @@ public class ProductMinDto {
     public ProductMinDto() {
     }
 
-    public ProductMinDto(String brand, String name, BigDecimal price, String imgUrl) {
+    public ProductMinDto(Long id, String brand, String name, BigDecimal price, String imgUrl) {
+        this.id = id;
         this.brand = brand;
         this.name = name;
         this.price = price;
         this.imgUrl = imgUrl;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getBrand() {

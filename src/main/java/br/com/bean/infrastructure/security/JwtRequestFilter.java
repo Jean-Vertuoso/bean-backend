@@ -9,10 +9,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+@Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
@@ -24,10 +26,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-            throws ServletException, IOException {
-
-        String servletPath = request.getServletPath();
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain chain) throws ServletException, IOException {
 
         if (request.getServletPath().equals("/users/login")) {
             chain.doFilter(request, response);
@@ -35,10 +36,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
 
         String token = null;
-        Cookie[] cookies = request.getCookies();
 
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
                 if ("jwt".equals(cookie.getName())) {
                     token = cookie.getValue();
                     break;
@@ -46,21 +46,25 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             }
         }
 
-        if (token != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            try {
+        try {
+            if (token != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 String username = jwtUtil.extrairEmailToken(token);
 
                 if (username != null && jwtUtil.validateToken(token, username)) {
                     UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                            userDetails, null, userDetails.getAuthorities());
+                    UsernamePasswordAuthenticationToken authentication =
+                            new UsernamePasswordAuthenticationToken(
+                                    userDetails,
+                                    null,
+                                    userDetails.getAuthorities()
+                            );
 
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
-            } catch (Exception e) {
-                SecurityContextHolder.clearContext();
             }
+        } catch (Exception e) {
+            SecurityContextHolder.clearContext(); // Limpa auth se token inválido
         }
 
         chain.doFilter(request, response);

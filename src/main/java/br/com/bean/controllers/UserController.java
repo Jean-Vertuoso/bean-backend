@@ -26,20 +26,12 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/users")
-@Tag(name = "Users", description = "Registration and management of users")
-@SecurityRequirement(name = SecurityConfig.SECURITY_SCHEME)
 public class UserController {
 
     private final UserService service;
-    private final AuthenticationManager authenticationManager;
-    private final JwtUtil jwtUtil;
-    private final CookieUtil cookieUtil;
 
-    public UserController(UserService service, AuthenticationManager authenticationManager, JwtUtil jwtUtil, CookieUtil cookieUtil) {
+    public UserController(UserService service) {
         this.service = service;
-        this.authenticationManager = authenticationManager;
-        this.jwtUtil = jwtUtil;
-        this.cookieUtil = cookieUtil;
     }
 
     @GetMapping(value = "/me")
@@ -48,25 +40,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    @Operation(summary = "User Login", description = "Authenticate a user using email and password")
-    @ApiResponse(responseCode = "200", description = "User successfully logged in")
-    @ApiResponse(responseCode = "401", description = "Invalid credentials")
-    @ApiResponse(responseCode = "500", description = "Server error")
-    public LoginResponseDto login(@RequestBody LoginRequestDto loginDto, HttpServletResponse response){
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginDto.getEmail(),
-                        loginDto.getPassword()
-                )
-        );
-
-        String jwt = jwtUtil.generateToken(authentication.getName());
-        cookieUtil.addJwtToCookie(response, jwt);
-
-        return new LoginResponseDto(
-                "Bearer "+ jwt,
-                loginDto.getEmail()
-        );
+    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginDto, HttpServletResponse response){
+        return ResponseEntity.ok(service.authUser(loginDto, response));
     }
 
     @PostMapping("/logout")
@@ -94,11 +69,6 @@ public class UserController {
     }
 
     @PostMapping
-    @Operation(summary = "Create User", description = "Creates a new user")
-    @ApiResponse(responseCode = "200", description = "User successfully saved")
-    @ApiResponse(responseCode = "401", description = "Invalid credentials")
-    @ApiResponse(responseCode = "409", description = "User already registered")
-    @ApiResponse(responseCode = "500", description = "Server error")
     public ResponseEntity<UserDto> saveUser(@RequestBody UserDto dtoRequest){
         UserDto dtoResponse = service.saveUser(dtoRequest);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()

@@ -13,6 +13,8 @@ public class SaleDto {
     private Instant saleTimestamp;
     private BigDecimal totalDiscount;
     private BigDecimal totalValue;
+    private BigDecimal amountReceived;
+    private BigDecimal change;
     private PaymentMethod paymentMethod;
     private Long clientId;
     private Long cashSessionId;
@@ -22,11 +24,13 @@ public class SaleDto {
     public SaleDto() {
     }
 
-    public SaleDto(Long id, Instant saleTimestamp, BigDecimal totalDiscount, BigDecimal totalValue, PaymentMethod paymentMethod, Long clientId, Long cashSessionId, Long userId) {
+    public SaleDto(Long id, Instant saleTimestamp, BigDecimal totalDiscount, BigDecimal totalValue, BigDecimal amountReceived, BigDecimal change, PaymentMethod paymentMethod, Long clientId, Long cashSessionId, Long userId) {
         this.id = id;
         this.saleTimestamp = saleTimestamp;
         this.totalDiscount = totalDiscount;
         this.totalValue = totalValue;
+        this.amountReceived = amountReceived;
+        this.change = change;
         this.paymentMethod = paymentMethod;
         this.clientId = clientId;
         this.cashSessionId = cashSessionId;
@@ -63,6 +67,22 @@ public class SaleDto {
 
     public void setTotalValue(BigDecimal totalValue) {
         this.totalValue = totalValue;
+    }
+
+    public BigDecimal getAmountReceived() {
+        return amountReceived;
+    }
+
+    public void setAmountReceived(BigDecimal amountReceived) {
+        this.amountReceived = amountReceived;
+    }
+
+    public BigDecimal getChange() {
+        return change;
+    }
+
+    public void setChange(BigDecimal change) {
+        this.change = change;
     }
 
     public PaymentMethod getPaymentMethod() {
